@@ -1,9 +1,12 @@
 import React from 'react';
-import RaisedButton from 'material-ui/RaisedButton';
+import AppBar from 'material-ui/AppBar';
 
-const MyAwesomeReactComponent = () => (
-    <RaisedButton label="Default" />
+const AppBarExampleIcon = () => (
+    <AppBar
+        title="Uni Ninja"
+        color="yellow"
+        iconClassNameRight="muidocs-icon-navigation-expand-more"
+    />
 );
 
-export default MyAwesomeReactComponent;
-
+export default AppBarExampleIcon;
