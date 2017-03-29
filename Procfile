@@ -1,1 +1,1 @@
-web: serve -s build
+web: node test.js
