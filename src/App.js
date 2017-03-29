@@ -8,7 +8,7 @@ import TestComponent from './TestComponent'
 
 const muiTheme = getMuiTheme({
     palette: {
-        textColor: yellow500,
+        primary1Color: yellow500,
     },
     appBar: {
         height: 50,
