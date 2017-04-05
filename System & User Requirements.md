@@ -16,6 +16,8 @@
 - Be able to save and store goals/tasks for later recall
 - Be able to see visualisations of workload
 - Be able to see visualisations of completed/to complete/estimates of time required
+- **Be able to select session time**
+- **Be shown a list of task based on time available**
 
 
 ## TUTOR FEEDBACK
