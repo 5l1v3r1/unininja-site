@@ -38,7 +38,7 @@ function workTime() {
 
 // update slider value
 
-document.getElementById("myRange").value.addEventListener('onchange', workTime(), false);
+document.getElementById("myRange").addEventListener('onchange', workTime, false);
 
 
 
