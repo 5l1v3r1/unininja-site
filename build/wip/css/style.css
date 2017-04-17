@@ -30,3 +30,11 @@ header div {
 #slider div {
   text-align: center;
 }
+
+.mdl-grid.center-items {
+  justify-content: center;
+}
+button {
+  max-width: 274px;
+
+}
