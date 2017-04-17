@@ -13,7 +13,7 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    
+
     <title>UNI NINJA SPLASH</title>
 
     <!-- Oswald Font Face-->
@@ -29,11 +29,11 @@
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="css/style.css">
 
-
+<script type="text/javascript" src="js/slider.js"</script>
 
 
   </head>
-  <body>
+<body onload="startTime()">
     <h1>Hello World</h1>
     <!--
       This HTML file is a template.
@@ -49,10 +49,26 @@
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras fermentum urna vel enim mollis tristique. Nulla laoreet tincidunt sem vitae euismod. Quisque aliquam vitae odio eu auctor. Duis vitae elit vitae diam maximus luctus. Ut rutrum, felis ac elementum faucibus, eros lectus tincidunt orci, sit amet porta leo neque vitae velit. Maecenas at pharetra tellus, at cursus dolor. Duis dui leo, egestas quis lacinia id, commodo et nisi.</p>
   </body>
 
+  Default slider	Starting value
+
+<!-- Slider with Starting Value -->
+<input class="mdl-slider mdl-js-slider" type="range"
+min="0" max="10" value="2" tabindex="0">
+
+
+
+<div id="txt"></div>
+
+
   <!-- BOOTSTRAP - Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 
 <!-- MATERIAL DESIGN -->
 <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
+
+
+
+
 </html>
