@@ -1,10 +1,32 @@
 body {
-  font-family: 'Oswald', sans-serif;
-  background-color: #4A4A4A;
   color: white;
-  font-size: 30px;
+  background-color: #424242;
 }
 
-h1 {
-  color: red;
+header div {
+  background-color: #424242;
+}
+
+#drawer span {
+  background-color: #424242;
+  color: white;
+}
+
+#drawer nav {
+  background-color: #424242;
+  color: white;
+}
+
+.mdl-layout__drawer {
+  background-color: #424242;
+  color: white;
+}
+
+.mdl-layout__header .mdl-layout__drawer-button {
+  background-color: #424242;
+  color: white;
+}
+
+#slider div {
+  text-align: center;
 }
