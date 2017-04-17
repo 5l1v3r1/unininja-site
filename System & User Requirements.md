@@ -18,6 +18,7 @@
 - Be able to see visualisations of completed/to complete/estimates of time required
 - **Be able to select session time**
 - **Be shown a list of task based on time available**
+- Be able to filter due dates, subjects, weighting
 
 
 ## TUTOR FEEDBACK
