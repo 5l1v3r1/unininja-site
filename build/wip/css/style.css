@@ -25,6 +25,7 @@ header div {
 .mdl-layout__header .mdl-layout__drawer-button {
   background-color: #424242;
   color: white;
+  padding-top: 10px;
 }
 
 #slider div {
@@ -34,7 +35,11 @@ header div {
 .mdl-grid.center-items {
   justify-content: center;
 }
+
 button {
   max-width: 274px;
+}
 
+.mdl-layout__header {
+  box-shadow: none;
 }
