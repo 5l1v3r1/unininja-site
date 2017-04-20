@@ -35,8 +35,7 @@ function workTime() {
     minute = y % 60;
     hour = (y-minute)/60;
 
-    checkTime(minute);
-
+    minute = checkTime(minute);
 
     document.getElementById("worktime").innerHTML = "Working Time: " + hour + ":" + minute;
     endTime();
