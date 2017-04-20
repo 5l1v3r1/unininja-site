@@ -10,15 +10,16 @@ var hour;
 
 
 function startTime() {
-
-  var today = new Date();
-  var h = today.getHours();
-  currentHour = h;
-  var m = today.getMinutes();
-  currentMinute = m;
+    
+    var today = new Date();
+    var h = today.getHours();
+    currentHour = h;
+    var m = today.getMinutes();
+    currentMinute = m;
     m = checkTime(m);
     document.getElementById('currenttime').innerHTML = "Current time: " + h + ":" + m;
     var t = setTimeout(startTime, 500);
+    endTime()
 };
 
 function checkTime(i) {
