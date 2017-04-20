@@ -28,17 +28,19 @@ function checkTime(i) {
 
 // look for value of slider
 function workTime() {
+    console.log("hello")
     x = document.getElementById("myRange").value;
     var y = x * 5;
     minute = y % 60;
     hour = (y-minute)/60;
 
     document.getElementById("worktime").innerHTML = "Working Time: " + hour + ":" + minute;
+    endTime();
 }
 
 // update slider value
 
-document.getElementById("myRange").addEventListener('onchange', workTime, false);
+document.getElementById("myRange").addEventListener('onchange', workTime);
 
 
 
