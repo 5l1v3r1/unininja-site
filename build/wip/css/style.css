@@ -25,7 +25,7 @@ header div {
 .mdl-layout__header .mdl-layout__drawer-button {
   background-color: #424242;
   color: white;
-  padding-top: 10px;
+  /* padding-top: 10px; */
 }
 
 #slider div {
