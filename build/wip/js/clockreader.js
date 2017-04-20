@@ -10,7 +10,7 @@ var hour;
 
 
 function startTime() {
-    
+
     var today = new Date();
     var h = today.getHours();
     currentHour = h;
@@ -19,7 +19,7 @@ function startTime() {
     m = checkTime(m);
     document.getElementById('currenttime').innerHTML = "Current time: " + h + ":" + m;
     var t = setTimeout(startTime, 500);
-    endTime()
+    endTime();
 };
 
 function checkTime(i) {
@@ -34,6 +34,9 @@ function workTime() {
     var y = x * 5;
     minute = y % 60;
     hour = (y-minute)/60;
+
+    checkTime(minute);
+
 
     document.getElementById("worktime").innerHTML = "Working Time: " + hour + ":" + minute;
     endTime();
