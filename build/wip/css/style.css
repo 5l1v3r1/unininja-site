@@ -43,3 +43,7 @@ button {
 .mdl-layout__header {
   box-shadow: none;
 }
+
+#logo {
+  height: 36px;
+}
