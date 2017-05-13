@@ -28,6 +28,10 @@ header div {
   /* padding-top: 10px; */
 }
 
+#readout {
+  padding-top: 20px;
+}
+
 #slider div {
   text-align: center;
 }
