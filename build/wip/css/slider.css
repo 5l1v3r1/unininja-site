@@ -1,11 +1,11 @@
 .rs-control .rs-range-color {
-    background-color: #54bbe0;
+    background-color: #3c76c6;
 }
 .rs-control .rs-path-color {
-    background-color: #ffffff;
+    background-color: #cdcdcd;
 }
 .rs-control .rs-handle:after {
-    background-color: #838383;
+    background-color: #337ab7;
 }
 .rs-control .rs-bg-color {
     background-color: #424242;

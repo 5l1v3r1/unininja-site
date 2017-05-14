@@ -42,6 +42,7 @@ header div {
 
 button {
   max-width: 274px;
+  background-color: pink;
 }
 
 .mdl-layout__header {
@@ -52,6 +53,15 @@ button {
   height: 36px;
 }
 
-#currenttime {
-  padding-top: 10px;
+#time {
+  padding-top: 35px;
+}
+
+.navbar {
+  background-color: #424242;
+  border: none;
+}
+
+footer {
+  background-color: #424242;
 }
