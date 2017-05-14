@@ -1,10 +1,10 @@
-var x = document.getElementById("myRange").value;
+// var x = document.getElementById("myRange").value;
 
 var currentHour;
 var currentMinute;
 
-var minute;
-var hour;
+// var minute;
+// var hour;
 
 
 function startTime() {
@@ -15,7 +15,7 @@ function startTime() {
     var m = today.getMinutes();
     currentMinute = m;
     m = checkTime(m);
-    document.getElementById('currenttime').innerHTML = "Current time: " + h + ":" + m;
+    document.getElementById('currentTime').innerHTML = "Current time: " + h + ":" + m;
     var t = setTimeout(startTime, 500);
     endTime();
 };
@@ -25,6 +25,8 @@ function checkTime(i) {
     return i;
 };
 
+
+/*
 // look for value of slider
 function workTime() {
     console.log("hello")
@@ -54,11 +56,12 @@ function endTime() {
       b -= 60;
       b = checkTime(b);
     }
-    if (a>=24) {
+    if (a>24) {
       a -= 24;
     }
     document.getElementById("endtime").innerHTML = "Estimated Finishing Time: " + a + ":" + b;
 }
+*/
 
 // COMMENTSSSSSSSS
 
