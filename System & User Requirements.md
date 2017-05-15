@@ -12,13 +12,13 @@
 - Be able to add course load
 - Be able to add additional reminders, events, goals
 - Be able to allocate study times
-- Be able to receive suggestions on what to work on based of time available
+- **Be able to receive suggestions on what to work on based of time available**
 - Be able to save and store goals/tasks for later recall
 - Be able to see visualisations of workload
 - Be able to see visualisations of completed/to complete/estimates of time required
 - **Be able to select session time**
 - **Be shown a list of task based on time available**
-- Be able to filter due dates, subjects, weighting
+- **Be able to filter due dates, subjects, weighting**
 
 
 ## TUTOR FEEDBACK

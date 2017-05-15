@@ -49,8 +49,12 @@ button {
   box-shadow: none;
 }
 
-#logo {
+#headerlogo {
   height: 36px;
+}
+
+#splashlogo {
+  height: 25%;
 }
 
 #time {
@@ -87,4 +91,21 @@ footer {
 .low {
   background-color: #3c76c6; /* blue */
   border: 2px solid #819EC6;
+}
+
+.list-head {
+  vertical-align: middle;
+
+}
+
+.order {
+  padding-right: 10px;
+}
+
+.list-head h4 {
+  padding-left: 10px;
+}
+
+.navbar-default .navbar-toggle {
+  border-color: #424242;
 }
