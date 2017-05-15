@@ -65,3 +65,26 @@ button {
 footer {
   background-color: #424242;
 }
+
+
+.priority {
+  padding: 10px;
+  margin: 10px;
+  padding-bottom: 15px;
+  border-radius: 10px;
+}
+
+.high{
+  background-color: #FA6154; /* red */
+  border: 2px solid #FAAEA7;
+}
+
+.med {
+  background-color: #F98233; /* orange */
+  border: 2px solid #F9BD95;
+}
+
+.low {
+  background-color: #3c76c6; /* blue */
+  border: 2px solid #819EC6;
+}
