@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block body %}
+    <h1>How long are you working for?</h1>
+    <form method="POST" action="{{ action }}">
+        {{ form.csrf_token }}
+        {{ form.time.label }} {{ form.time(size=20) }}
+    </form>
+{% endblock %}

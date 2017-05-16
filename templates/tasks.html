@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',
+    filename='css/tasks.css') }}">
+{% endblock %}
+{% block body %}
+    <h1>Current Tasks</h1>
+    <table>
+        <thead>
+            <th>Name</th>
+            <th>Time Required</th>
+        </thead>
+        {% for task in tasks %}
+            <tr>
+                <td>{{ task.name }}</td>
+                <td>{{ task.time }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <h1>New Task</h1>
+    <form method="POST" action="{{ action }}">
+        {{ form.csrf_token }}
+        {{ form.name.label }} {{ form.name(size=20) }}
+        {{ form.length.label }} {{ form.length(size=20) }}
+        {{ form.submit }}
+    </form>
+{% endblock %}
