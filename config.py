@@ -6,7 +6,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 class Auth:
     CLIENT_ID = ('39251003332-v9ticl3g9mc96lgpbqp8u4elta2cd8s3.apps.googleusercontent.com')
     CLIENT_SECRET = 'JXf7Ic_jfCam1S7lBJalDyPZ'
-    REDIRECT_URI = 'http://localhost:5000/gCallback'
+    REDIRECT_URI = 'https://uni.ninja/gCallback'
     AUTH_URI = 'https://accounts.google.com/o/oauth2/auth'
     TOKEN_URI = 'https://accounts.google.com/o/oauth2/token'
     USER_INFO = 'https://www.googleapis.com/userinfo/v2/me'
