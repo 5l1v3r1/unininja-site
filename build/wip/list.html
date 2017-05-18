@@ -58,7 +58,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#"><img id="headerlogo" src="images/unininjalogo.svg"></a>
+      <a class="navbar-brand" href="#"><img id="logo" src="images/unininjalogo.svg"></a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -72,15 +72,42 @@
     </div><!-- /.navbar-collapse -->
 </nav>
 
-<!-- MAIN CONTENT -->
     <div class="row">
-      <div class="jumbotron col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3 col-lg-4 col-lg-offset-4">
-        <img id="splashlogo" src="images/unininjalogo.svg">
-        <h2>Welcome to Uni.Ninja</h2>
-        <ul class="nav nav-tabs pull-right">
-          <li role="presentation" class="active"><a href="#">Sign in</a></li>
-          <li role="presentation"><a href="#">Create Account</a></li>
+      <div class="list-head text-center col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+        <h4 class="pull-left pri-list">What should you work on?</h4>
+        <div class="btn-group pull-right order">
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Order by... <span class="caret"></span>
+          </button>
+
+          <ul class="dropdown-menu dropdown-menu-right">
+            <li><a href="#">Priority</a></li>
+
+            <li role="separator" class="divider"></li>
+
+            <li><a href="#">Weighting: High to Low</a></li>
+            <li><a href="#">Weighting: Low to High</a></li>
+
+            <li role="separator" class="divider"></li>
+
+            <li><a href="#">Closest Due</a></li>
+            <li><a href="#">Furthest Due</a></li>
+          </ul>
+        </div>
       </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+        <div class="priority high">
+          <h3>HIGH PRIORITY</h3>
+        </div>
+        <div class="priority med">
+          <h3>MEDIUM PRIORITY</h3>
+        </div>
+        <div class="priority low">
+          <h3>LOW PRIORITY</h3>
+        </div>
       </div>
     </div>
 
@@ -91,6 +118,27 @@
     </footer>
 
   </div>
+  <script>
+  $("#slider").roundSlider({
+      handleShape: "dot",
+      width: 25,
+      radius: 100,
+      value: 42,
+      circleShape: "pie",
+      startAngle: 315,
+      sliderType: "min-range",
+      handleSize: "+10",
+      max: "60"
+  });
+  </script>
+  <!--
+  - getvalue()
+  - adjust sizing of slider with screen size
+
+  -->
+
+  <script type="text/javascript" href="js/clockreader2.js">
+  </script>
 
   <!-- BOOTSTRAP Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>

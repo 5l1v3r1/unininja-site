@@ -28,6 +28,10 @@ header div {
   /* padding-top: 10px; */
 }
 
+#readout {
+  padding-top: 20px;
+}
+
 #slider div {
   text-align: center;
 }
@@ -38,12 +42,70 @@ header div {
 
 button {
   max-width: 274px;
+  background-color: pink;
 }
 
 .mdl-layout__header {
   box-shadow: none;
 }
 
-#logo {
+#headerlogo {
   height: 36px;
+}
+
+#splashlogo {
+  height: 25%;
+}
+
+#time {
+  padding-top: 35px;
+}
+
+.navbar {
+  background-color: #424242;
+  border: none;
+}
+
+footer {
+  background-color: #424242;
+}
+
+
+.priority {
+  padding: 10px;
+  margin: 10px;
+  padding-bottom: 15px;
+  border-radius: 10px;
+}
+
+.high{
+  background-color: #FA6154; /* red */
+  border: 2px solid #FAAEA7;
+}
+
+.med {
+  background-color: #F98233; /* orange */
+  border: 2px solid #F9BD95;
+}
+
+.low {
+  background-color: #3c76c6; /* blue */
+  border: 2px solid #819EC6;
+}
+
+.list-head {
+  vertical-align: middle;
+
+}
+
+.order {
+  padding-right: 10px;
+}
+
+.list-head h4 {
+  padding-left: 10px;
+}
+
+.navbar-default .navbar-toggle {
+  border-color: #424242;
 }
