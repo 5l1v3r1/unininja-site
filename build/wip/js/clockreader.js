@@ -10,7 +10,6 @@ var hour;
 
 
 function startTime() {
-
     var today = new Date();
     var h = today.getHours();
     currentHour = h;
