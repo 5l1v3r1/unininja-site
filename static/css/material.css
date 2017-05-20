@@ -21,6 +21,12 @@ table, th, td{
     border: 1px solid black;
 }
 
+@media (min-width : 720px) {
+    .mdl-grid {
+        width: 75%;
+    }
+}
+
 .rs-control .rs-range-color {
     background-color: #ff5252;
 }
