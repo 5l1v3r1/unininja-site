@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Uni Ninja</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.yellow-red.min.css"/>
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/jquery/1.11.3/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/jquery.roundslider/1.3/roundslider.min.css"
+          rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/slider.css') }}">
+    <script src="https://cdn.jsdelivr.net/jquery.roundslider/1.3/roundslider.min.js"></script>
+
+    <script src="{{ url_for('static', filename='js/clockReader.js') }}"></script>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/material.css') }}"/>
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body onload='initSlider();startTime()'>
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+            <!-- Title -->
+            <span class="mdl-layout-title">
+                <img id="header-logo" src="{{ url_for('static', filename='img/unininjalogo.svg') }}">
+                Uni Ninja
+            </span>
+        </div>
+        <!-- Tabs -->
+        <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+            <a href="#fixed-tab-1" class="mdl-layout__tab {% if tab == 'home' %}is-active{% endif %}">Home</a>
+            <a href="#fixed-tab-2" class="mdl-layout__tab {% if tab == 'work' %}is-active{% endif %}">Work</a>
+            <a href="#fixed-tab-3" class="mdl-layout__tab {% if tab == 'tasks' %}is-active{% endif %}">Tasks</a>
+            <a href="#fixed-tab-4" class="mdl-layout__tab {% if tab == 'plan' %}is-active{% endif %}">Plan</a>
+        </div>
+    </header>
+    <div class="mdl-layout__drawer">
+        <span class="mdl-layout-title">Menu</span>
+        <nav class="mdl-navigation">
+            <a class="mdl-navigation__link" href=""><i class="material-icons padding-icons">account_circle</i>Sign
+                In</a>
+            <a class="mdl-navigation__link" href=""><i class="material-icons padding-icons">exit_to_app</i>Sign Out</a>
+            <a class="mdl-navigation__link" href=""><i class="material-icons padding-icons">info</i>About</a>
+            <a class="mdl-navigation__link" href=""><i class="material-icons padding-icons">settings</i>Settings</a>
+        </nav>
+    </div>
+    <main class="mdl-layout__content">
+        <section class="mdl-layout__tab-panel {% if tab == 'home' %}is-active{% endif %}" id="fixed-tab-1">
+            <div class="page-content">
+                <div class="mdl-grid" id="work">
+                    <h1>Home</h1>
+                    Tell me what's due.
+                    Tell me when you want to study.
+                    I'll tell you what to do.
+                </div>
+            </div>
+        </section>
+        <section class="mdl-layout__tab-panel {% if tab == 'work' %}is-active{% endif %}" id="fixed-tab-2">
+            <div class="page-content">
+                <div class="mdl-grid" id="work">
+                    <div class="mdl-cell--2-col"></div>
+                    <div class="mdl-cell mdl-cell--4-col">
+                        <h2>Work</h2>
+                    </div>
+                    <div class="mdl-cell--6-col"></div>
+
+                    <div class="mdl-cell--4-col"></div>
+                    <div class="mdl-cell mdl-cell--4-col">
+                        <div style="float: none; margin: 0 auto;" id="slider"></div>
+                    </div>
+                    <div class="mdl-cell--4-col"></div>
+
+                    <div class="mdl-cell--4-col"></div>
+                    <div class="mdl-cell--4-col timeInformation">
+                        <p>
+                        <div id="currentTime"></div>
+                        </p>
+                        <p>
+                        <div id="workTime"></div>
+                        </p>
+                        <p>
+                        <div id="endTime"></div>
+                        </p>
+                        <!-- Accent-colored raised button with ripple -->
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                            WHAT SHOULD I WORK ON?
+                        </button>
+                    </div>
+                    <div class="mdl-cell--4-col"></div>
+                </div>
+            </div>
+        </section>
+        <section class="mdl-layout__tab-panel {% if tab == 'tasks' %}is-active{% endif %}" id="fixed-tab-3">
+            <div class="page-content">
+                <div class="mdl-grid" id="tasks">
+                    <div class="mdl-cell--2-col"></div>
+                    <div class="mdl-cell mdl-cell--4-col">
+                        <h1>
+                            <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+                                <i class="material-icons">add</i>
+                            </button>
+                            Assignments
+                        </h1>
+
+                    </div>
+                    <div class="mdl-cell--6-col"></div>
+
+                    <div class="mdl-cell mdl-cell--2-col"></div>
+                    <div class="mdl-cell mdl-cell--8-col" style="overflow-x: auto">
+                        <table class="">
+                            <thead>
+                            <tr>
+                                <th>Subject</th>
+                                <th>Name</th>
+                                <th class="mdl-data-table__cell--non-numeric">Details</th>
+                                <th>Due date</th>
+                                <th>Worth</th>
+                                <th>% Complete</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>CSSE2010</td>
+                                <td>Final Project</td>
+                                <td class="mdl-data-table__cell--non-numeric">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam asperiores
+                                        atque excepturi fugit id illo illum inventore itaque libero neque, non omnis
+                                        pariatur quibusdam repellendus repudiandae rerum soluta unde vero!</p>
+                                </td>
+                                <td>20/11/2017</td>
+                                <td>50%</td>
+                                <td>20%</td>
+                                <td>
+                                    <i class="material-icons edit-button">edit</i>
+                                    <i class="material-icons edit-button">delete</i>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mdl-cell mdl-cell--2-col"></div>
+
+                    <div class="mdl-cell--2-col"></div>
+                    <div class="mdl-cell mdl-cell--4-col">
+                        <h1>
+                            <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+                                <i class="material-icons">add</i>
+                            </button>
+                            Exams
+                        </h1>
+                    </div>
+                    <div class="mdl-cell--6-col"></div>
+
+                    <div class="mdl-cell mdl-cell--2-col"></div>
+                    <div class="mdl-cell mdl-cell--8-col" style="overflow-x: auto">
+                        <table class="">
+                            <thead>
+                            <tr>
+                                <th>Subject</th>
+                                <th>Name</th>
+                                <th class="mdl-data-table__cell--non-numeric">Details</th>
+                                <th>Due date</th>
+                                <th>Worth</th>
+                                <th>% Complete</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>CSSE2010</td>
+                                <td>Final Exam</td>
+                                <td class="mdl-data-table__cell--non-numeric">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam asperiores
+                                        atque excepturi fugit id illo illum inventore itaque libero neque, non omnis
+                                        pariatur quibusdam repellendus repudiandae rerum soluta unde vero!</p>
+                                </td>
+                                <td>20/12/2017</td>
+                                <td>50%</td>
+                                <td>20%</td>
+                                <td>
+                                    <i class="material-icons edit-button">edit</i>
+                                    <i class="material-icons edit-button">delete</i>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mdl-cell mdl-cell--2-col"></div>
+
+                    <div class="mdl-cell--2-col"></div>
+                    <div class="mdl-cell mdl-cell--4-col">
+                        <h1>
+                            <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+                                <i class="material-icons">add</i>
+                            </button>
+                            Other
+                        </h1>
+                    </div>
+                    <div class="mdl-cell--6-col"></div>
+                </div>
+            </div>
+        </section>
+        <section class="mdl-layout__tab-panel {% if tab == 'plan' %}is-active{% endif %}" id="fixed-tab-4">
+            <div class="page-content">
+                <div class="mdl-grid" id="plan">
+                    Plan
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+</body>
+</html>

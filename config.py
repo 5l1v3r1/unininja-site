@@ -3,18 +3,8 @@ import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
-class Auth:
-    CLIENT_ID = ('39251003332-v9ticl3g9mc96lgpbqp8u4elta2cd8s3.apps.googleusercontent.com')
-    CLIENT_SECRET = 'JXf7Ic_jfCam1S7lBJalDyPZ'
-    REDIRECT_URI = 'https://uni.ninja/gCallback'
-    AUTH_URI = 'https://accounts.google.com/o/oauth2/auth'
-    TOKEN_URI = 'https://accounts.google.com/o/oauth2/token'
-    USER_INFO = 'https://www.googleapis.com/userinfo/v2/me'
-    SCOPE = (r"https://www.googleapis.com/auth/userinfo.profile" + r" https://www.googleapis.com/auth/userinfo.email")
-
-
 class Config:
-    APP_NAME = "Test Google Login"
+    APP_NAME = "Uni Ninja"
     SECRET_KEY = 'just a test string for now, change later'
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_TRACK_MODIFICATIONS = True

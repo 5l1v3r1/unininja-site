@@ -8,7 +8,7 @@ function startTime() {
     var m = today.getMinutes();
     currentMinute = m;
     m = checkTime(m);
-    document.getElementById('currentTime').innerHTML = "Current time: " + h + ":" + m;
+    document.getElementById('currentTime').innerHTML = "It's currently: " + h + ":" + m;
     var t = setTimeout(startTime, 500);
     workTime();
     endTime();
@@ -33,7 +33,7 @@ function endTime() {
     if (a > 24) {
         a -= 24;
     }
-    document.getElementById("endtime").innerHTML = "Estimated Finishing Time: " + a + ":" + b;
+    document.getElementById("endTime").innerHTML = "I'll be done at: " + a + ":" + b;
 }
 
 function workTime() {
@@ -45,8 +45,8 @@ function workTime() {
 
     minute = checkTime(minute);
 
-    document.getElementById("worktime").innerHTML = "Working Time: " + hour + ":" + minute;
-    document.getElementById("working_time").value = y * 60;
+    document.getElementById("workTime").innerHTML = "I can work for: " + hour + ":" + minute;
+    // document.getElementById("working_time").value = y * 60;
     endTime();
 }
 
