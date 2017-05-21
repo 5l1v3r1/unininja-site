@@ -1,26 +1,49 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>UniNinja - {{ pagename }}</title>
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png') }}">
-
-    {#JQuery#}
+    <title>Uni Ninja</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.yellow-red.min.css"/>
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
     <script src="https://cdn.jsdelivr.net/jquery/1.11.3/jquery.min.js"></script>
 
-    Bootstrap
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-            crossorigin="anonymous"></script>
-
-
-    Custom CSS
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     {% block head %}{% endblock %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/material.css') }}"/>
 </head>
 <body {% block body_attrs %}{% endblock %}>
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+            <!-- Title -->
+            <span class="mdl-layout-title">
+                <img id="header-logo" src="{{ url_for('static', filename='img/unininjalogo.svg') }}">
+                Uni Ninja
+            </span>
+        </div>
+        {% block header %}{% endblock %}
+    </header>
+    <div class="mdl-layout__drawer">
+        <span class="mdl-layout-title">Menu</span>
+        <nav class="mdl-navigation">
+            {% block drawer %}{% endblock %}
+            <a class="mdl-navigation__link" href=""><i class="material-icons padding-icons">info</i>About</a>
+            <a class="mdl-navigation__link" href=""><i class="material-icons padding-icons">settings</i>Settings</a>
+        </nav>
+    </div>
+    <main class="mdl-layout__content">
+        {% block content %} {% endblock %}
+    </main>
+</div>
 {% block body %}{% endblock %}
 </body>
 </html>
+
+
+{#{% block head %}{% endblock %}#}
+{#{% block body_attrs %}{% endblock %}#}
+{#{% block header %}{% endblock %}#}
+{#{% block drawer %}{% endblock %}#}
+{#{% block content %} {% endblock %}#}
+{#{% block body %}{% endblock %}#}

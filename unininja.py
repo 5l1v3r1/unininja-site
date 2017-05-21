@@ -3,62 +3,19 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, HiddenField, SubmitField, PasswordField
 from wtforms.validators import DataRequired
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import *
+from flask_login import UserMixin
 import datetime
 
 app = Flask(__name__)
 app.config.from_object('config.Config')
 db = SQLAlchemy(app)
-login_manager = LoginManager(app)
-login_manager.login_view = "login"
-login_manager.session_protection = "strong"
 
-
-@login_manager.user_loader
-def load_user(user_id):
-    return User.get(user_id)
+roles_users = db.Table('roles_users', db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
+                       db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
 
 
 class TimeForm(FlaskForm):
     working_time = HiddenField('Seconds', validators=[DataRequired()])
-    submit = SubmitField('Submit')
-
-
-class TasksForm(FlaskForm):
-    """
-    4 types:
-    - Exam
-        - User
-        - Name
-        - Subject
-        - DateTime
-        - Grade Percentage
-        - Study time required
-    - Assignment
-        - User
-        - Name
-        - Subject
-        - DateTime due
-        - Complete before time
-        - Grade Percentage
-        - Time required
-    - Lecture content
-        - User
-        - Name
-        - Subject
-        - DateTime Startweek
-        - DateTime Stopweek
-        - Grade Percentage
-        - Time required
-    - Task
-        - User
-        - Name
-        - Details
-        - Time required
-    """
-
-    name = StringField('Name', validators=[DataRequired()])
-    length = StringField('Length', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 
@@ -67,34 +24,20 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
 
 
-class User(db.Model):
-    __tablename__ = "users"
-    id = db.Column('user_id', db.Integer, primary_key=True)
-    name = db.Column('name', db.String(50), unique=True, index=True)
-    password = db.Column('password', db.String(10))
-    email = db.Column('email', db.String(50), unique=True, index=True)
-    registered_on = db.Column('registered_on', db.DateTime)
+class SignupForm(FlaskForm):
+    name = StringField('Name', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
 
-    def __init__(self, username, password, email):
-        self.name = username
-        self.password = password
-        self.email = email
-        self.registered_on = datetime.datetime.utcnow()
 
-    def is_authenticated(self):
-        return True
-
-    def is_active(self):
-        return True
-
-    def is_anonymous(self):
-        return False
-
-    def get_id(self):
-        return str(self.id)
-
-    def __repr__(self):
-        return '<User %r>' % self.name
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(255), unique=True)
+    password = db.Column(db.String(255))
+    active = db.Column(db.Boolean())
+    confirmed_at = db.Column(db.DateTime())
+    roles = db.relationship('Role', secondary=roles_users,
+                            backref=db.backref('users', lazy='dynamic'))
 
 
 class Task(db.Model):
@@ -107,32 +50,31 @@ class Task(db.Model):
         return '<Task %r - %r>' % (self.id, self.name)
 
 
+def create_user(name, email, password):
+    db.create_all()
+
+    db.create_user(name=name, email=email, password=password)
+    db.session.commit()
+
+
 @app.route('/')
 def index():
-    return render_template('index.html', pagename='hi')
+    tab = request.args.get('tab') or 'home'
+    return render_template('index.html', tab=tab)
 
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    # Here we use a class of some kind to represent and validate our
-    # client-side form data. For example, WTForms is a library that will
-    # handle this for us, and we use a custom LoginForm to validate.
-    form = LoginForm()
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    form = SignupForm()
     if form.validate_on_submit():
-        # Login and validate the user.
-        # user should be an instance of your `User` class
-        login_user(user)
+        create_user(form.name. form.email, form.password)
+        return redirect(url_for('index'))
+    return render_template('signup.html', form=form)
 
-        flask.flash('Logged in successfully.')
 
-        next = flask.request.args.get('next')
-        # is_safe_url should check if the url is safe for redirects.
-        # See http://flask.pocoo.org/snippets/62/ for an example.
-        if not is_safe_url(next):
-            return flask.abort(400)
-
-        return flask.redirect(next or flask.url_for('index'))
-    return flask.render_template('login.html', form=form)
+@app.route('/signin')
+def signin():
+    return render_template('signup.html')
 
 
 @app.route('/work', methods=['GET', 'POST'])
@@ -142,7 +84,7 @@ def work():
         return render_template('work.html', task=task, time=time_available)
 
     form = TimeForm()
-    if form.validate_on_submit():  # No form submitted
+    if form.validate_on_submit():
         session['time'] = form.working_time.data
         return redirect(url_for('work'))
 
@@ -164,12 +106,6 @@ def input_tasks():
 def logout():
     session.clear()
     return redirect(url_for('index'))
-
-
-@app.route('/material')
-def material():
-    tab = request.args.get('tab') or 'home'
-    return render_template('material-base.html', tab=tab)
 
 
 def calculate_work():
