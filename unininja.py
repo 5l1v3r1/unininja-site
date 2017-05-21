@@ -1,11 +1,14 @@
+import os
+from datetime import datetime
+from urllib.parse import urlparse, urljoin
+
 from flask import *
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, current_user, login_user, logout_user, UserMixin
+
 from flask_wtf import FlaskForm
 from wtforms import StringField, HiddenField, SubmitField, PasswordField
 from wtforms.validators import DataRequired
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, current_user, login_user, logout_user, UserMixin
-from datetime import datetime
-from urllib.parse import urlparse, urljoin
 
 app = Flask(__name__)
 app.config.from_object('config.Config')
@@ -13,7 +16,6 @@ db = SQLAlchemy(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
-
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -102,6 +104,7 @@ def is_safe_url(target):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    logout_user()
     form = LoginForm()
     if form.validate_on_submit():
         user = check_user(form.email.data, form.password.data)
@@ -150,9 +153,6 @@ def logout():
     return redirect(url_for('index'))
 
 
-def calculate_work():
-    return Task.query.first(), session.get('time')
-
-
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
+    app.add_url_rule('/favicon.png', redirect_to=url_for('static', filename='favicon.png'))
