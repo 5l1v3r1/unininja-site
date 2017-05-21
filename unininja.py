@@ -75,6 +75,14 @@ def check_user(email, password):
         return None
 
 
+@app.before_request
+def before_request():
+    if request.url.startswith('http://'):
+        url = request.url.replace('http://', 'https://', 1)
+        code = 301
+        return redirect(url, code=code)
+
+
 @app.route('/')
 def index():
     if current_user.is_authenticated:
