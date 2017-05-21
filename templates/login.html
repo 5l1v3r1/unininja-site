@@ -1,2 +1,57 @@
-<h1>Click to login</h1>
-<a href="{{ auth_url }}">Here</a>
+{% extends "base.html" %}
+{% block header %}
+    <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+        <a href="{{ url_for('index') }}" class="mdl-layout__tab">Home</a>
+        <a href="{{ url_for('signup') }}" class="mdl-layout__tab is-active">Sign Up</a>
+    </div>
+
+    {% if error %}
+        <style>
+        mdl-card__title {
+            background-color: red;
+        }
+        </style>
+    {% endif %}
+{% endblock %}
+{% block content %}
+    <section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
+        <div class="page-content">
+            <div class="mdl-grid" id="home">
+                <div class="mdl-cell mdl-cell--2-col"></div>
+                <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--8-col">
+                    <form method="POST" id="signInForm" action="login">
+
+                        <div class="mdl-card__title mdl-card--expand">
+                            <h4>
+                                Sign in
+                                {% if error %}
+                                    There was an error signing in
+                                {% endif %}
+                            </h4>
+                        </div>
+                        <div class="mdl-card__supporting-text">
+                            {{ form.csrf_token }}
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class="mdl-textfield__input" name="email" type="email" id="userEmail">
+                                <label class="mdl-textfield__label" for="userEmail">{{ form.email.label }}</label>
+                            </div>
+                            <br>
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class="mdl-textfield__input" name="password" type="password" id="userPassword">
+                                <label class="mdl-textfield__label" for="userPassword">{{ form.password.label }}</label>
+                            </div>
+                            <br>
+                        </div>
+                        <div class="mdl-card__actions mdl-card--border">
+                            <a href="#" onclick="document.getElementById('signInForm').submit();"
+                               class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                                Ok
+                            </a>
+                        </div>
+                    </form>
+                </div>
+                <div class="mdl-cell mdl-cell--2-col"></div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

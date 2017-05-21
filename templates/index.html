@@ -22,12 +22,6 @@
     </div>
 {% endblock %}
 
-{% block drawer %}
-    <a class="mdl-navigation__link" href=""><i class="material-icons padding-icons">account_circle</i>Sign
-        In</a>
-    <a class="mdl-navigation__link" href=""><i class="material-icons padding-icons">exit_to_app</i>Sign Out</a>
-{% endblock %}
-
 {% block content %}
     <section class="mdl-layout__tab-panel {% if tab == 'home' %}is-active{% endif %}" id="fixed-tab-1">
         <div class="page-content">
@@ -49,11 +43,8 @@
                         I'll tell you what to do.
                     </div>
                     <div class="mdl-card__actions mdl-card--border">
-                        <a href="{{ url_for('signup') }}" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                            Sign up
-                        </a>
-                        <a href="{{ url_for('signin') }}" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                            Sign in
+                        <a href="?tab=assignments" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                            Let's Go!
                         </a>
                     </div>
                 </div>

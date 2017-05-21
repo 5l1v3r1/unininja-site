@@ -28,6 +28,12 @@
         <span class="mdl-layout-title">Menu</span>
         <nav class="mdl-navigation">
             {% block drawer %}{% endblock %}
+            {% if current_user.is_authenticated %}
+                <a class="mdl-navigation__link" href="logout"><i class="material-icons padding-icons">exit_to_app</i>Sign Out</a>
+            {% else %}
+                <a class="mdl-navigation__link" href="login"><i class="material-icons padding-icons">account_circle</i>Sign
+                    In</a>
+            {% endif %}
             <a class="mdl-navigation__link" href=""><i class="material-icons padding-icons">info</i>About</a>
             <a class="mdl-navigation__link" href=""><i class="material-icons padding-icons">settings</i>Settings</a>
         </nav>

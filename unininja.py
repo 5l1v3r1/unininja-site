@@ -3,25 +3,26 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, HiddenField, SubmitField, PasswordField
 from wtforms.validators import DataRequired
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import UserMixin
-import datetime
+from flask_login import LoginManager, current_user, login_user, logout_user, UserMixin
+from datetime import datetime
+from urllib.parse import urlparse, urljoin
 
 app = Flask(__name__)
 app.config.from_object('config.Config')
 db = SQLAlchemy(app)
 
-roles_users = db.Table('roles_users', db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
-                       db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return db.session.query(User).get(user_id)
 
 
 class TimeForm(FlaskForm):
     working_time = HiddenField('Seconds', validators=[DataRequired()])
     submit = SubmitField('Submit')
-
-
-class LoginForm(FlaskForm):
-    email = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
 
 
 class SignupForm(FlaskForm):
@@ -30,14 +31,18 @@ class SignupForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
 
 
+class LoginForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+
+
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(255), unique=True)
     password = db.Column(db.String(255))
+    name = db.Column(db.String(255), unique=True)
     active = db.Column(db.Boolean())
     confirmed_at = db.Column(db.DateTime())
-    roles = db.relationship('Role', secondary=roles_users,
-                            backref=db.backref('users', lazy='dynamic'))
 
 
 class Task(db.Model):
@@ -51,30 +56,67 @@ class Task(db.Model):
 
 
 def create_user(name, email, password):
-    db.create_all()
+    if not User.query.filter_by(email=email).first():
+        user = User(name=name, email=email, password=password, active=True, confirmed_at=datetime.utcnow())
+        db.session.add(user)
+        db.session.commit()
+        return True
+    else:
+        return False
 
-    db.create_user(name=name, email=email, password=password)
-    db.session.commit()
+
+def check_user(email, password):
+    user = User.query.filter_by(email=email, password=password).first()
+    if user:
+        return user
+    else:
+        return None
 
 
 @app.route('/')
 def index():
-    tab = request.args.get('tab') or 'home'
-    return render_template('index.html', tab=tab)
+    if current_user.is_authenticated:
+        tab = request.args.get('tab') or 'home'
+        return render_template('index.html', tab=tab)
+    else:
+        return render_template('unregistered.html')
 
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     form = SignupForm()
     if form.validate_on_submit():
-        create_user(form.name. form.email, form.password)
-        return redirect(url_for('index'))
+        if create_user(form.name.data, form.email.data, form.password.data):
+            return redirect(url_for('index'))
+        else:
+            flash("Could not create user")
+            return render_template('signup.html', form=form)
     return render_template('signup.html', form=form)
 
 
-@app.route('/signin')
-def signin():
-    return render_template('signup.html')
+def is_safe_url(target):
+    ref_url = urlparse(request.host_url)
+    test_url = urlparse(urljoin(request.host_url, target))
+    return test_url.scheme in ('http', 'https') and ref_url.netloc == test_url.netloc
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = check_user(form.email.data, form.password.data)
+        if user:
+            login_user(user, remember=True)
+
+            next_redir = request.args.get('next')
+            if not is_safe_url(next_redir):
+                return abort(400)
+
+            return redirect(url_for('index'))
+        else:
+            session['user'] = None
+            return render_template('login.html', form=form, error=True)
+    return render_template('login.html', form=form, error=False)
 
 
 @app.route('/work', methods=['GET', 'POST'])
@@ -104,7 +146,7 @@ def input_tasks():
 
 @app.route('/logout')
 def logout():
-    session.clear()
+    logout_user()
     return redirect(url_for('index'))
 
 
