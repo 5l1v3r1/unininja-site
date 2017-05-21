@@ -10,3 +10,7 @@
 .rs-control .rs-bg-color {
     background-color: #424242;
 }
+
+.rs-border {
+    border: none;
+}
