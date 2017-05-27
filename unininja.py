@@ -1,4 +1,5 @@
 import os
+import enum
 from datetime import datetime
 from urllib.parse import urlparse, urljoin
 
@@ -16,6 +17,7 @@ db = SQLAlchemy(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -39,6 +41,7 @@ class LoginForm(FlaskForm):
 
 
 class User(db.Model, UserMixin):
+    __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(255), unique=True)
     password = db.Column(db.String(255))
@@ -46,12 +49,20 @@ class User(db.Model, UserMixin):
     active = db.Column(db.Boolean())
     confirmed_at = db.Column(db.DateTime())
 
+    tasks = db.relationship("Task", backref='users')
+
 
 class Task(db.Model):
     __tablename__ = 'tasks'
     id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     name = db.Column(db.String(64))
-    time = db.Column(db.Integer)
+    subject = db.Column(db.String(64))
+    details = db.Column(db.UnicodeText())
+    type = db.Column(db.Enum('exam', 'assignment', 'task', name='task_type'))
+    due_time = db.Column(db.Integer)
+    percent_complete = db.Column(db.Integer)
+    percent_worth = db.Column(db.Integer)
 
     def __repr__(self):
         return '<Task %r - %r>' % (self.id, self.name)
@@ -77,7 +88,7 @@ def check_user(email, password):
 
 @app.before_request
 def before_request():
-    if request.url.startswith('http://'):
+    if request.url.startswith('http://') and not request.url.startswith("http://127.0.0."):
         url = request.url.replace('http://', 'https://', 1)
         code = 301
         return redirect(url, code=code)
@@ -144,15 +155,51 @@ def work():
     return render_template('input.html', form=form, action='work')
 
 
-@app.route('/tasks', methods=['GET', 'POST'])
+@app.route('/tasks')
 def input_tasks():
-    tasks = Task.query.all()
-    form = TasksForm()
-    if form.validate_on_submit():
-        task = Task(name=form.name.data, time=form.length.data)
-        db.session.add(task)
-        return redirect(url_for('input_tasks'))
-    return render_template('tasks.html', form=form, tasks=tasks, action='tasks')
+    args = request.args
+    type = args['type']
+
+    raw_tasks = Task.query.filter_by(user_id=current_user.id, type=type).all()
+    tasks = []
+    for raw_task in raw_tasks:
+        task = {'id': raw_task.id,
+                'name': raw_task.name,
+                'subject': raw_task.subject,
+                'details': raw_task.details,
+                'due_time': raw_task.due_time,
+                'percent_complete': raw_task.percent_complete,
+                'percent_worth': raw_task.percent_worth
+                }
+        tasks.append(task)
+
+    return jsonify({'status': 'success',
+                    'tasks': tasks})
+
+
+@app.route('/new')
+def input_task():
+    if current_user.is_authenticated:
+        args = request.args
+        type = args['type']
+        if type == 'assignment':
+            assignment = Task(name=args.get('name'), user_id=current_user.id, subject=args.get('subject'),
+                              details=args.get('details'), due_time=args.get('due_time'),
+                              percent_complete=args.get('percent_complete'), percent_worth=args.get('percent_worth'),
+                              type="assignment")
+            db.session.add(assignment)
+            return jsonify({'status': 'success'})
+        elif type == 'exam':
+            pass
+        elif type == 'task':
+            pass
+    return jsonify({'status': 'failure'})
+
+
+@app.route('/update')
+def update_task():
+    if current_user.is_authenticated:
+        args = request.args
 
 
 @app.route('/logout')
