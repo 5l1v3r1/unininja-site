@@ -209,5 +209,5 @@ def logout():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0', debug=True, port=5001)
     app.add_url_rule('/favicon.png', redirect_to=url_for('static', filename='favicon.png'))
