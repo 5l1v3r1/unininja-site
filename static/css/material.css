@@ -47,3 +47,7 @@ table, th, td{
 .new-assignment-spacer, #new-assignment {
     display: none;
 }
+
+.mdl-card {
+    margin: 5px;
+}
