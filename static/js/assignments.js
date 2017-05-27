@@ -149,5 +149,3 @@ function createCard(task, type) {
         componentHandler.upgradeAllRegistered();
     }
 }
-
-
