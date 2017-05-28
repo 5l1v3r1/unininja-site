@@ -64,7 +64,11 @@ function initSlider() {
         max: "60",
         drag: function () {
             workTime();
+        },
+        create: function () {
+            $('.rs-inner.rs-bg-color.rs-border').css("background-color", "#424242");
+            $('.rs-overlay.rs-transition.rs-bg-color').css("background-color", "#424242");
         }
-
     });
 }
+
