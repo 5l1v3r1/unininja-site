@@ -113,14 +113,25 @@ footer {
     border-color: #424242;
 }
 
+<<<<<<< HEAD
 .mdl-card {
     background-color: #424242;
-
+=======
+.main-logo {
+  padding-top: 10px;
+padding-left: 28px;
+width: 270px;
 }
 
-.mdl-shadow--2dp {
-    box-shadow: none;
-}
+/*.mdl-card {
+  background-color: #424242;
+>>>>>>> bf1902c28035bd5855e75efc661ef0cd48b36d43
+
+}*/
+
+/*.mdl-shadow--2dp {
+  box-shadow: none;
+}*/
 
 /* .mdl-button {
   color: #424242 !important;
