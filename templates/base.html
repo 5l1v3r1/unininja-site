@@ -27,7 +27,9 @@
         <div class="mdl-layout__header-row">
             <!-- Title -->
             <span class="mdl-layout-title">
-                <img id="header-logo" src="{{ url_for('static', filename='img/unininjalogo.svg') }}">
+                <svg id="header-logo">
+                  <use xlink;href="{{ url_for('static', filename='img/unininjalogo.svg') }}">
+                </svg>
                 uni.ninja
             </span>
         </div>
