@@ -53,7 +53,7 @@ table, th, td {
     background-color: white;
 }
 
-.new-assignment-spacer, #new-assignment {
+.new-assignment-spacer, #new-assignment, .new-exam-spacer, #new-exam, .new-task-spacer, #new-task{
     display: none;
 }
 

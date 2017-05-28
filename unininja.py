@@ -141,26 +141,7 @@ def login():
     return render_template('login.html', form=form, error=False)
 
 
-@app.route('/work', methods=['GET', 'POST'])
-def work():
-    if session.get('time'):  # form submitted previously
-        task, time_available = calculate_work()
-        return render_template('work.html', task=task, time=time_available)
-
-    form = TimeForm()
-    if form.validate_on_submit():
-        session['time'] = form.working_time.data
-        return redirect(url_for('work'))
-
-    return render_template('input.html', form=form, action='work')
-
-
-@app.route('/tasks')
-def input_tasks():
-    args = request.args
-    type = args['type']
-
-    raw_tasks = Task.query.filter_by(user_id=current_user.id, type=type).all()
+def filter_tasks(raw_tasks):
     tasks = []
     for raw_task in raw_tasks:
         task = {'id': raw_task.id,
@@ -172,6 +153,31 @@ def input_tasks():
                 'percent_worth': raw_task.percent_worth
                 }
         tasks.append(task)
+    return tasks
+
+
+@app.route('/work', methods=['GET', 'POST'])
+def work():
+    time = request.args.get('time')
+    if current_user.is_authenticated and time:
+        tasks = Task.query.filter_by(user_id=current_user.id).all()
+        tasks = filter_tasks(tasks)
+        tasks = calculate_work(tasks)
+        if len(tasks) < 1:
+            return redirect('/?tab=assignments')
+        return render_template('work.html', task=tasks[0], time=time)
+
+    else:
+        return redirect('/')
+
+
+@app.route('/tasks')
+def input_tasks():
+    args = request.args
+    type = args['type']
+
+    tasks = Task.query.filter_by(user_id=current_user.id, type=type).all()
+    tasks = filter_tasks(tasks)
 
     tasks = calculate_work(tasks)
 
@@ -192,9 +198,17 @@ def input_task():
             db.session.add(assignment)
             return jsonify({'status': 'success'})
         elif type == 'exam':
-            pass
+            exam = Task(name=args.get('name'), user_id=current_user.id, subject=args.get('subject'),
+                        details=args.get('details'), due_time=args.get('due_time'),
+                        percent_complete=args.get('percent_complete'), percent_worth=args.get('percent_worth'),
+                        type="exam")
+            db.session.add(exam)
         elif type == 'task':
-            pass
+            task = Task(name=args.get('name'), user_id=current_user.id, subject=args.get('subject'),
+                        details=args.get('details'), due_time=args.get('due_time'),
+                        percent_complete=args.get('percent_complete'), percent_worth=args.get('percent_worth'),
+                        type="task")
+            db.session.add(task)
     return jsonify({'status': 'failure'})
 
 
@@ -224,13 +238,15 @@ def calculate_work(tasks):
 
         score = 100 - task['percent_complete']
         score *= task['percent_worth']
-        score *= 86400/time_diff
-        score *= 10000/time_diff
+        score *= 86400 / time_diff
+        score *= 10000 / time_diff
         score *= 10
 
         task['score'] = score
 
-        if score > 100:
+        if time_diff <= 0:
+            task['color'] = "white"
+        elif score > 100:
             task['color'] = "red"
         elif score > 1:
             task['color'] = "yellow"

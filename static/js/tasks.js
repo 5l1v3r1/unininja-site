@@ -2,20 +2,31 @@ var assignmentButton = document.getElementById('assignment-add');
 var examButton = document.getElementById('exam-add');
 var taskButton = document.getElementById('task-add');
 
-updateDueTime();
+var buttons = [assignmentButton, examButton, taskButton];
+var taskTypes = ['assignment', 'exam', 'task'];
 
-function updateDueTime() {
-    var indate = document.getElementById('new-assignment-date').value.split("/");
-    var intime = document.getElementById('new-assignment-time').value.split(":");
+
+function work() {
+    var workSeconds = $("#slider").roundSlider("getValue") * 5 * 60;
+    document.location = "work?time=" + workSeconds;
+}
+
+taskTypes.forEach(function (type) {
+    updateDueTime(type);
+})
+
+function updateDueTime(type) {
+    var indate = document.getElementById('new-' + type + '-date').value.split("/");
+    var intime = document.getElementById('new-' + type + '-time').value.split(":");
 
     var realDate = new Date(indate[2], indate[1] - 1, indate[0], intime[0], intime[1]);
 
-    var realDateInput = document.getElementById("new-assignment-due_time").value = realDate.getTime() / 1000 | 0;
+    var realDateInput = document.getElementById("new-" + type + "-due_time").value = realDate.getTime() / 1000 | 0;
 }
 
-function updateSlider(id) {
-    var slider = document.getElementById('new-assignment-' + id);
-    var parrot = document.getElementById(id + '-parrot');
+function updateSlider(id, type) {
+    var slider = document.getElementById('new-' + type + '-' + id);
+    var parrot = document.getElementById(type + '-' + id + '-parrot');
     parrot.innerHTML = String(slider.value);
 }
 
@@ -45,62 +56,70 @@ function updateComplete(id, type) {
     });
 }
 
-function newAssignment() {
+function newTask(type) {
     var headerLogo = document.getElementById("header-logo");
     headerLogo.style.animation = "spin 1s infinite linear";
 
     var getData = {
-        "name": document.getElementById("new-assignment-name").value,
-        "subject": document.getElementById("new-assignment-subject").value,
-        "details": document.getElementById("new-assignment-details").value,
-        "type": "assignment",
-        "due_time": document.getElementById("new-assignment-due_time").value,
-        "percent_worth": document.getElementById("new-assignment-worth").value,
-        "percent_complete": document.getElementById("new-assignment-complete").value
+        "name": document.getElementById("new-" + type + "-name").value,
+        "subject": document.getElementById("new-" + type + "-subject").value,
+        "details": document.getElementById("new-" + type + "-details").value,
+        "type": type,
+        "due_time": document.getElementById("new-" + type + "-due_time").value,
+        "percent_worth": document.getElementById("new-" + type + "-worth").value,
+        "percent_complete": document.getElementById("new-" + type + "-complete").value
     };
     console.log(getData);
 
     $.getJSON('new', getData, function (data) {
         if (data['status'] == 'failure') {
+            headerLogo.style.animation = "";
             return;
         }
         headerLogo.style.animation = "";
     });
 }
 
-updateSlider('worth');
-updateSlider('complete');
-
-
-assignmentButton.addEventListener("click", function () {
-    // Toggle cards
-    var cards = Array.from(document.getElementsByClassName("assignment-card"));
-    cards.forEach(function (card) {
-        card.style.display = card.style.display == "none" ? "block" : "none";
-    });
-
-    // Toggle icon
-    var icon = document.getElementById("assignment-i");
-    icon.innerHTML = icon.innerHTML == "add" ? "check" : "add";
-
-    // Toggle form
-    var spacers = Array.from(document.getElementsByClassName("new-assignment-spacer"));
-    spacers.forEach(function (spacer) {
-        $(spacer).toggle();
-    });
-
-    var form = document.getElementById("new-assignment");
-    $(form).toggle();
-
-    if (icon.innerHTML == "add") {
-        getTasks('assignment');
-    }
-
+taskTypes.forEach(function (type) {
+    updateSlider('worth', type);
+    updateSlider('complete', type);
 });
 
-var types = ['assignment', 'exam', 'task'];
 
-types.forEach(function (type) {
+for (var i=0; i < taskTypes.length; i++){
+    var button = buttons[i];
+    var taskType = taskTypes[i];
+
+    button.addEventListener("click", function (e) {
+        var taskType = e.target.id.split('-')[0];
+        // Toggle cards
+        var cards = Array.from(document.getElementsByClassName(taskType + "-card"));
+        cards.forEach(function (card) {
+            card.style.display = card.style.display == "none" ? "block" : "none";
+        });
+
+        // Toggle icon
+        var icon = document.getElementById(taskType + "-i");
+        icon.innerHTML = icon.innerHTML == "add" ? "check" : "add";
+
+        // Toggle form
+        var spacers = Array.from(document.getElementsByClassName("new-" + taskType + "-spacer"));
+        spacers.forEach(function (spacer) {
+            $(spacer).toggle();
+        });
+
+        var form = document.getElementById("new-" + taskType);
+        $(form).toggle();
+
+        if (icon.innerHTML == "add") {
+            getTasks(taskType);
+        }
+
+    });
+}
+
+
+taskTypes.forEach(function (type) {
     getTasks(type);
 });
 
@@ -118,7 +137,9 @@ function getTasks(type) {
         }
 
         var oldCards = Array.from(document.getElementsByClassName(type + "-card"));
-        oldCards.forEach(function(card) {
+        console.log(type);
+        console.log(oldCards);
+        oldCards.forEach(function (card) {
             card.remove()
         });
 
@@ -136,7 +157,7 @@ function createCard(task, type) {
     var cardDiv = document.createElement('div');
     cardDiv.classList.add("mdl-card");
     cardDiv.classList.add("mdl-shadow--2dp");
-    cardDiv.classList.add("assignment-card");
+    cardDiv.classList.add(type + "-card");
 
     var titleDiv = document.createElement('div');
     titleDiv.classList.add("mdl-card__title");
