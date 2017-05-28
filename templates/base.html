@@ -18,8 +18,10 @@
 
     {% block head %}{% endblock %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/material.css') }}"/>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
 </head>
-<body style="background-color: #424242;"{% block body_attrs %}{% endblock %}>
+<body {% block body_attrs %}{% endblock %}>
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <header class="mdl-layout__header">
         <div class="mdl-layout__header-row">
