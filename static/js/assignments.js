@@ -138,6 +138,7 @@ function createCard(task, type) {
 
     var titleDiv = document.createElement('div');
     titleDiv.classList.add("mdl-card__title");
+    titleDiv.style.backgroundColor = task["color"];
 
     var titleParagraph = document.createElement('h4');
     titleParagraph.innerHTML = "<strong>" + task['subject'] + "</strong> " + task['name'];

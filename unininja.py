@@ -173,6 +173,8 @@ def input_tasks():
                 }
         tasks.append(task)
 
+    tasks = calculate_work(tasks)
+
     return jsonify({'status': 'success',
                     'tasks': tasks})
 
@@ -214,6 +216,29 @@ def update_task():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+
+def calculate_work(tasks):
+    for task in tasks:
+        time_diff = task['due_time'] - int(datetime.utcnow().timestamp())
+
+        score = 100 - task['percent_complete']
+        score *= task['percent_worth']
+        score *= 86400/time_diff
+        score *= 10000/time_diff
+        score *= 10
+
+        task['score'] = score
+
+        if score > 100:
+            task['color'] = "red"
+        elif score > 1:
+            task['color'] = "yellow"
+        else:
+            task['color'] = "green"
+
+    tasks = sorted(tasks, key=lambda k: k['score'], reverse=True)
+    return tasks
 
 
 if __name__ == '__main__':

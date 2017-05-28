@@ -30,6 +30,9 @@ function endTime() {
         b -= 60;
         b = checkTime(b);
     }
+    if (b < 10){
+        b = checkTime(b);
+    }
     if (a > 24) {
         a -= 24;
     }
