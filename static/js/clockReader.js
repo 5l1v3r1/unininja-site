@@ -25,12 +25,12 @@ function checkTime(i) {
 function endTime() {
     var a = parseInt(currentHour) + parseInt(hour);
     var b = parseInt(currentMinute) + parseInt(minute);
-    if (b > 60) {
+    if (b >= 60) {
         a += 1;
         b -= 60;
         b = checkTime(b);
     }
-    if (b < 10){
+    if (b < 10 && parseInt(currentMinute) < 10) {
         b = checkTime(b);
     }
     if (a > 24) {
@@ -45,9 +45,20 @@ function workTime() {
     minute = y % 60;
     hour = (y - minute) / 60;
 
-    minute = checkTime(minute);
+    // minute = checkTime(minute);
 
-    document.getElementById("workTime").innerHTML = "I can work for: " + hour + ":" + minute;
+    if (hour == 0) {
+        document.getElementById("workTime").innerHTML = "I can work for " + minute + " minutes";
+    } else if (hour == 1) {
+        if (minute == 0) {
+            document.getElementById("workTime").innerHTML = "I can work for an hour";
+        } else {
+            document.getElementById("workTime").innerHTML = "I can work for an hour and " + minute + " minutes";
+        }
+    } else {
+        document.getElementById("workTime").innerHTML = "I can work for " + hour + " hours and " + minute + " minutes";
+    }
+
     // document.getElementById("working_time").value = y * 60;
     endTime();
 }
