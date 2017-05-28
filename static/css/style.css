@@ -119,6 +119,10 @@ padding-left: 28px;
 width: 270px;
 }
 
+#assignments > div.mdl-card.mdl-shadow--2dp.assignment-card > div.mdl-card__title {
+  background-color: #fff;
+}
+
 #assignments > div.mdl-card.mdl-shadow--2dp.assignment-card > div.mdl-card__actions.mdl-card--border.mdl-card--expand > p {
   color:#000;
 }
