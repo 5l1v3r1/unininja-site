@@ -2,6 +2,17 @@ var assignmentButton = document.getElementById('assignment-add');
 var examButton = document.getElementById('exam-add');
 var taskButton = document.getElementById('task-add');
 
+updateDueTime();
+
+function updateDueTime() {
+    var indate = document.getElementById('new-assignment-date').value.split("/");
+    var intime = document.getElementById('new-assignment-time').value.split(":");
+
+    var realDate = new Date(indate[2], indate[1]-1, indate[0], intime[0], intime[1]);
+
+    var realDateInput = document.getElementById("new-assignment-due_time").value = realDate.getTime()/1000|0;
+}
+
 function updateSlider(id) {
     var slider = document.getElementById('new-assignment-' + id);
     var parrot = document.getElementById(id + '-parrot');
@@ -25,8 +36,30 @@ function updateComplete(id) {
         "value": value
     };
 
-    console.log("hello there");
     $.getJSON('update', getData, function (data) {
+        if (data['status'] == 'failure') {
+            return;
+        }
+        headerLogo.style.animation = "";
+    });
+}
+
+function newAssignment() {
+    var headerLogo = document.getElementById("header-logo");
+    headerLogo.style.animation = "spin 1s infinite linear";
+
+    var getData = {
+        "name": document.getElementById("new-assignment-name").value,
+        "subject": document.getElementById("new-assignment-subject").value,
+        "details": document.getElementById("new-assignment-details").value,
+        "type": "assignment",
+        "due_time": document.getElementById("new-assignment-due_time").value,
+        "percent_worth": document.getElementById("new-assignment-worth").value,
+        "percent_complete": document.getElementById("new-assignment-complete").value
+    };
+    console.log(getData);
+
+    $.getJSON('new', getData, function (data) {
         if (data['status'] == 'failure') {
             return;
         }
