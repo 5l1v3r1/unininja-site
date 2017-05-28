@@ -130,3 +130,7 @@ width: 270px;
 div div {
   color:#000;
 }
+
+#currentTime, #workTime, #endTime {
+  color: #fff;
+}
