@@ -118,3 +118,7 @@ footer {
 padding-left: 28px;
 width: 270px;
 }
+
+.mdl-card__actions p {
+  color:#000;
+}
