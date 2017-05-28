@@ -86,7 +86,7 @@ taskTypes.forEach(function (type) {
 });
 
 
-for (var i=0; i < taskTypes.length; i++){
+for (var i = 0; i < taskTypes.length; i++) {
     var button = buttons[i];
     var taskType = taskTypes[i];
 
@@ -137,8 +137,6 @@ function getTasks(type) {
         }
 
         var oldCards = Array.from(document.getElementsByClassName(type + "-card"));
-        console.log(type);
-        console.log(oldCards);
         oldCards.forEach(function (card) {
             card.remove()
         });
@@ -148,6 +146,10 @@ function getTasks(type) {
             createCard(tasks[i], type);
         }
         headerLogo.style.animation = "";
+
+        var taskBadge = document.getElementById(type + '-badge');
+        taskBadge.setAttribute("data-badge", tasks.length);
+        taskBadge.classList.remove('hidden-badge');
     });
 }
 

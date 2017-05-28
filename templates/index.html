@@ -23,9 +23,9 @@
         <a href="#fixed-tab-1" class="mdl-layout__tab {% if tab == 'home' %}is-active{% endif %}">Home</a>
         <a href="#fixed-tab-2" class="mdl-layout__tab {% if tab == 'work' %}is-active{% endif %}">Work</a>
         <a href="#fixed-tab-3"
-           class="mdl-layout__tab {% if tab == 'assignments' %}is-active{% endif %}">Assignments</a>
-        <a href="#fixed-tab-4" class="mdl-layout__tab {% if tab == 'exams' %}is-active{% endif %}">Exams</a>
-        <a href="#fixed-tab-5" class="mdl-layout__tab {% if tab == 'tasks' %}is-active{% endif %}">Tasks</a>
+           class="mdl-layout__tab {% if tab == 'assignments' %}is-active{% endif %}"><span class="mdl-badge hidden-badge" data-badge="0" id="assignment-badge">Assignments</span></a>
+        <a href="#fixed-tab-4" class="mdl-layout__tab {% if tab == 'exams' %}is-active{% endif %}"><span class="mdl-badge hidden-badge" data-badge="0" id="exam-badge">Exams</span></a>
+        <a href="#fixed-tab-5" class="mdl-layout__tab {% if tab == 'tasks' %}is-active{% endif %}"><span class="mdl-badge hidden-badge" data-badge="0" id="task-badge">Tasks</span></a>
         <a href="#fixed-tab-6" class="mdl-layout__tab {% if tab == 'plan' %}is-active{% endif %}">Plan</a>
     </div>
 {% endblock %}

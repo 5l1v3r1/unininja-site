@@ -246,6 +246,7 @@ def calculate_work(tasks):
 
         if time_diff <= 0:
             task['color'] = "white"
+            task['score'] = 0
         elif score > 100:
             task['color'] = "red"
         elif score > 1:
