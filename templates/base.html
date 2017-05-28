@@ -48,6 +48,21 @@
     </div>
     <main class="mdl-layout__content">
         {% block content %} {% endblock %}
+        <footer class="mdl-mini-footer">
+            <div class="mdl-mini-footer__left-section">
+               <div class="mdl-logo">
+                  Copyright Information
+               </div>
+               <ul class="mdl-mini-footer__link-list">
+                  <li><a href="#">Help</a></li>
+                  <li><a href="#">Privacy and Terms</a></li>
+                  <li><a href="#">User Agreement</a></li>
+               </ul>
+            </div>
+            <div class="mdl-mini-footer__right-section">
+              <p>uni.ninja</p>
+            </div>
+         </footer>
     </main>
 </div>
 {% block body %}{% endblock %}
@@ -61,3 +76,12 @@
 {#{% block drawer %}{% endblock %}#}
 {#{% block content %} {% endblock %}#}
 {#{% block body %}{% endblock %}#}
+
+
+<!--
+
+REFERENCES
+
+https://www.tutorialspoint.com/materialdesignlite/materialdesignlite_footers.htm
+
+-->
