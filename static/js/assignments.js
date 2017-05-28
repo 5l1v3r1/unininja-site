@@ -8,6 +8,32 @@ function updateSlider(id) {
     parrot.innerHTML = String(slider.value);
 }
 
+function updateTask(id) {
+    var slider = document.getElementById('task' + id + "slider");
+    var parrot = document.getElementById('task' + id);
+    parrot.innerHTML = String(slider.value);
+}
+
+function updateComplete(id) {
+    var headerLogo = document.getElementById("header-logo");
+    headerLogo.style.animation = "spin 1s infinite linear";
+
+    var value = document.getElementById("task" + id + "slider").value;
+
+    var getData = {
+        "id": id,
+        "value": value
+    };
+
+    console.log("hello there");
+    $.getJSON('update', getData, function (data) {
+        if (data['status'] == 'failure') {
+            return;
+        }
+        headerLogo.style.animation = "";
+    });
+}
+
 updateSlider('worth');
 updateSlider('complete');
 
@@ -84,7 +110,7 @@ function createCard(task, type) {
     var percentCompleteDiv = document.createElement('div');
     percentCompleteDiv.classList.add("mdl-card__actions");
     percentCompleteDiv.classList.add("mdl-card--border");
-    percentCompleteDiv.innerHTML = "% Complete";
+    percentCompleteDiv.innerHTML = "<span id='task" + task['id'] + "'>" + task['percent_complete'] + "</span>% Complete";
 
     var percentCompleteSlider = document.createElement("input");
     percentCompleteSlider.classList.add("mdl-slider");
@@ -94,6 +120,10 @@ function createCard(task, type) {
     percentCompleteSlider.setAttribute("max", "100");
     percentCompleteSlider.setAttribute("tabindex", "0");
     percentCompleteSlider.setAttribute("value", task['percent_complete']);
+    percentCompleteSlider.setAttribute("id", "task" + task['id'] + "slider");
+    percentCompleteSlider.setAttribute("oninput", "updateTask('" + task['id'] + "')");
+    percentCompleteSlider.setAttribute("onchange", "updateComplete('" + task['id'] + "')");
+
 
     percentCompleteDiv.appendChild(percentCompleteSlider);
     cardDiv.appendChild(percentCompleteDiv);
@@ -101,7 +131,7 @@ function createCard(task, type) {
     var test = document.createElement('div');
     test.classList.add("mdl-card__actions");
     test.classList.add("mdl-card--border");
-    test.innerHTML = "% of Grade";
+    test.innerHTML = task['percent_worth'] + "% of Grade";
 
     var percentWorthSlider = document.createElement("input");
     percentWorthSlider.classList.add("mdl-slider");
@@ -111,6 +141,7 @@ function createCard(task, type) {
     percentWorthSlider.setAttribute("max", "100");
     percentWorthSlider.setAttribute("tabindex", "0");
     percentWorthSlider.setAttribute("value", task['percent_worth']);
+    percentWorthSlider.disabled = true;
 
     test.appendChild(percentWorthSlider);
     cardDiv.appendChild(test);

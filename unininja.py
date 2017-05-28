@@ -201,6 +201,14 @@ def update_task():
     if current_user.is_authenticated:
         args = request.args
 
+        task = Task.query.filter_by(id=args.get('id'), user_id=current_user.id).first()
+        if task:
+            task.percent_complete = args.get('value')
+            db.session.commit()
+            return jsonify({'status': 'success'})
+
+        return jsonify({'status': 'failure'})
+
 
 @app.route('/logout')
 def logout():

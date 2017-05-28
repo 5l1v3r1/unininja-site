@@ -8,6 +8,12 @@
 
 #header-logo {
     width: 36px;
+    /*-webkit-animation: spin 1s infinite linear;*/
+}
+
+@-webkit-keyframes spin {
+    0%   {-webkit-transform: rotate(0deg)}
+    100% {-webkit-transform: rotate(360deg)}
 }
 
 .timeInformation {
@@ -15,13 +21,13 @@
     z-index: 1000;
 }
 
-table, th, td{
+table, th, td {
     margin: auto;
     overflow-x: auto;
     border: 1px solid black;
 }
 
-@media (min-width : 720px) {
+@media (min-width: 720px) {
     .mdl-grid {
         width: 75%;
     }
@@ -30,12 +36,15 @@ table, th, td{
 .rs-control .rs-range-color {
     background-color: #ff5252;
 }
+
 .rs-control .rs-path-color {
     background-color: #cdcdcd;
 }
+
 .rs-control .rs-handle:after {
     background-color: #ff5252;
 }
+
 .rs-control .rs-bg-color {
     background-color: #424242;
 }
