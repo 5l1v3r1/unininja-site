@@ -25,7 +25,7 @@ function updateTask(id) {
     parrot.innerHTML = String(slider.value);
 }
 
-function updateComplete(id) {
+function updateComplete(id, type) {
     var headerLogo = document.getElementById("header-logo");
     headerLogo.style.animation = "spin 1s infinite linear";
 
@@ -41,6 +41,7 @@ function updateComplete(id) {
             return;
         }
         headerLogo.style.animation = "";
+        getTasks(type);
     });
 }
 
@@ -91,11 +92,6 @@ assignmentButton.addEventListener("click", function () {
     var form = document.getElementById("new-assignment");
     $(form).toggle();
 
-    var assignmentCards = Array.from(document.getElementsByClassName("assignment-card"));
-    assignmentCards.forEach(function (card) {
-        card.remove();
-    });
-
     if (icon.innerHTML == "add") {
         getTasks('assignment');
     }
@@ -120,8 +116,14 @@ function getTasks(type) {
         if (data['status'] == 'failure') {
             return;
         }
+
+        var oldCards = Array.from(document.getElementsByClassName(type + "-card"));
+        oldCards.forEach(function(card) {
+            card.remove()
+        });
+
         var tasks = data['tasks'];
-        for (var i = 0; i < tasks.length; i++) {
+        for (i = 0; i < tasks.length; i++) {
             createCard(tasks[i], type);
         }
         headerLogo.style.animation = "";
@@ -169,7 +171,7 @@ function createCard(task, type) {
     percentCompleteSlider.setAttribute("value", task['percent_complete']);
     percentCompleteSlider.setAttribute("id", "task" + task['id'] + "slider");
     percentCompleteSlider.setAttribute("oninput", "updateTask('" + task['id'] + "')");
-    percentCompleteSlider.setAttribute("onchange", "updateComplete('" + task['id'] + "')");
+    percentCompleteSlider.setAttribute("onchange", "updateComplete('" + task['id'] + "', '" + type + "')");
 
 
     percentCompleteDiv.appendChild(percentCompleteSlider);
