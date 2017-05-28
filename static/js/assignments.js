@@ -76,7 +76,6 @@ assignmentButton.addEventListener("click", function () {
     var cards = Array.from(document.getElementsByClassName("assignment-card"));
     cards.forEach(function (card) {
         card.style.display = card.style.display == "none" ? "block" : "none";
-
     });
 
     // Toggle icon
@@ -91,6 +90,16 @@ assignmentButton.addEventListener("click", function () {
 
     var form = document.getElementById("new-assignment");
     $(form).toggle();
+
+    var assignmentCards = Array.from(document.getElementsByClassName("assignment-card"));
+    assignmentCards.forEach(function(card) {
+        card.remove();
+    });
+
+    if (icon.innerHTML == "add"){
+        getTasks('assignment');
+    }
+
 });
 
 var types = ['assignment', 'exam', 'task'];

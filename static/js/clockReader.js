@@ -37,7 +37,6 @@ function endTime() {
 }
 
 function workTime() {
-    console.log("changed");
     x = $("#slider").roundSlider("getValue");
     var y = x * 5;
     minute = y % 60;
