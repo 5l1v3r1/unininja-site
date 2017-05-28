@@ -56,7 +56,11 @@ function workTime() {
             document.getElementById("workTime").innerHTML = "I can work for an hour and " + minute + " minutes";
         }
     } else {
-        document.getElementById("workTime").innerHTML = "I can work for " + hour + " hours and " + minute + " minutes";
+        if (minute == 0) {
+            document.getElementById("workTime").innerHTML = "I can work for " + hour + " hours";
+        } else {
+            document.getElementById("workTime").innerHTML = "I can work for " + hour + " hours and " + minute + " minutes";
+        }
     }
 
     // document.getElementById("working_time").value = y * 60;
