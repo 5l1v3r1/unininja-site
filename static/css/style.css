@@ -120,5 +120,5 @@ width: 270px;
 }
 
 .card-text {
-  color: black;
+  color: black !important;
 }
