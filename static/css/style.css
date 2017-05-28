@@ -113,3 +113,16 @@ footer {
 .navbar-default .navbar-toggle {
   border-color: #424242;
 }
+
+.mdl-card {
+  background-color: #424242;
+
+}
+
+.mdl-shadow--2dp {
+  box-shadow: none;
+}
+
+.mdl-button {
+  color: #424242 !important;
+}
