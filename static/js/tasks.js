@@ -141,15 +141,16 @@ function getTasks(type) {
         });
 
         var tasks = data['tasks'];
-        for (i = 0; i < tasks.length; i++) {
-            createCard(tasks[i], type);
-        }
-        headerLogo.style.animation = "";
 
         var taskBadge = document.getElementById(type + '-badge');
         console.log("setting styles");
         taskBadge.setAttribute("data-badge", tasks.length);
         taskBadge.classList.remove('hidden-badge');
+        
+        for (i = 0; i < tasks.length; i++) {
+            createCard(tasks[i], type);
+        }
+        headerLogo.style.animation = "";
     });
 }
 
