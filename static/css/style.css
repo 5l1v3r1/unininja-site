@@ -114,6 +114,11 @@ footer {
   border-color: #424242;
 }
 
+.main-logo {
+  padding-top: 10px;
+  width: 80%;
+}
+
 /*.mdl-card {
   background-color: #424242;
 
