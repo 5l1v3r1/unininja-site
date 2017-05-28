@@ -8,9 +8,9 @@ function updateDueTime() {
     var indate = document.getElementById('new-assignment-date').value.split("/");
     var intime = document.getElementById('new-assignment-time').value.split(":");
 
-    var realDate = new Date(indate[2], indate[1]-1, indate[0], intime[0], intime[1]);
+    var realDate = new Date(indate[2], indate[1] - 1, indate[0], intime[0], intime[1]);
 
-    var realDateInput = document.getElementById("new-assignment-due_time").value = realDate.getTime()/1000|0;
+    var realDateInput = document.getElementById("new-assignment-due_time").value = realDate.getTime() / 1000 | 0;
 }
 
 function updateSlider(id) {
@@ -92,11 +92,11 @@ assignmentButton.addEventListener("click", function () {
     $(form).toggle();
 
     var assignmentCards = Array.from(document.getElementsByClassName("assignment-card"));
-    assignmentCards.forEach(function(card) {
+    assignmentCards.forEach(function (card) {
         card.remove();
     });
 
-    if (icon.innerHTML == "add"){
+    if (icon.innerHTML == "add") {
         getTasks('assignment');
     }
 
@@ -109,9 +109,12 @@ types.forEach(function (type) {
 });
 
 function getTasks(type) {
+    var headerLogo = document.getElementById("header-logo");
+    headerLogo.style.animation = "spin 1s infinite linear";
     var getData = {
         'type': type
     };
+
 
     $.getJSON('tasks', getData, function (data) {
         if (data['status'] == 'failure') {
@@ -121,6 +124,7 @@ function getTasks(type) {
         for (var i = 0; i < tasks.length; i++) {
             createCard(tasks[i], type);
         }
+        headerLogo.style.animation = "";
     });
 }
 
