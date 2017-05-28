@@ -1,5 +1,5 @@
 body {
-    color: black;
+    color: white;
     background-color: #424242;
 }
 
@@ -119,6 +119,6 @@ padding-left: 28px;
 width: 270px;
 }
 
-.mdl-card__actions p {
+#assignments > div.mdl-card.mdl-shadow--2dp.assignment-card > div.mdl-card__actions.mdl-card--border.mdl-card--expand > p {
   color:#000;
 }
