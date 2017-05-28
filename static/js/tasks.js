@@ -69,7 +69,6 @@ function newTask(type) {
         "percent_worth": document.getElementById("new-" + type + "-worth").value,
         "percent_complete": document.getElementById("new-" + type + "-complete").value
     };
-    console.log(getData);
 
     $.getJSON('new', getData, function (data) {
         if (data['status'] == 'failure') {
@@ -148,6 +147,7 @@ function getTasks(type) {
         headerLogo.style.animation = "";
 
         var taskBadge = document.getElementById(type + '-badge');
+        console.log("setting styles");
         taskBadge.setAttribute("data-badge", tasks.length);
         taskBadge.classList.remove('hidden-badge');
     });
