@@ -12,14 +12,14 @@
     <script src="https://cdn.jsdelivr.net/jquery/1.11.3/jquery.min.js"></script>
 
 
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     {% block head %}{% endblock %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/material.css') }}"/>
 </head>
-<body {% block body_attrs %}{% endblock %}>
+<body style="background-color: #424242;"{% block body_attrs %}{% endblock %}>
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <header class="mdl-layout__header">
         <div class="mdl-layout__header-row">
