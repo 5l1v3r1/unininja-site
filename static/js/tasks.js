@@ -37,10 +37,8 @@ function updateDueTime(type) {
     var intime = document.getElementById('new-' + type + '-time').value.split(":");
 
     var realDate = new Date(indate[2], indate[1] - 1, indate[0], intime[0], intime[1]);
-    console.log(realDate);
     var offset = new Date().getTimezoneOffset() * 60000;
     realDate = new Date(realDate.getTime() + offset);
-    console.log(realDate);
 
     var realDateInput = document.getElementById("new-" + type + "-due_time").value = realDate.getTime() / 1000 | 0;
 }
@@ -107,37 +105,37 @@ taskTypes.forEach(function (type) {
 
 
 for (var i = 0; i < taskTypes.length; i++) {
-    var button = buttons[i];
-    var taskType = taskTypes[i];
+    (function () {
+        var button = buttons[i];
+        var taskType = taskTypes[i];
 
-    button.addEventListener("click", function (e) {
-        var taskType = e.target.id.split('-')[0];
-        // Toggle cards
-        var cards = Array.from(document.getElementsByClassName(taskType + "-card"));
-        cards.forEach(function (card) {
-            card.style.display = card.style.display == "none" ? "block" : "none";
+        button.addEventListener("click", function (e) {
+            // Toggle cards
+            var cards = Array.from(document.getElementsByClassName(taskType + "-card"));
+            cards.forEach(function (card) {
+                card.style.display = card.style.display == "none" ? "block" : "none";
+            });
+
+            // Toggle icon
+            var icon = document.getElementById(taskType + "-i");
+            icon.innerHTML = icon.innerHTML == "add" ? "check" : "add";
+
+            // Toggle form
+            var spacers = Array.from(document.getElementsByClassName("new-" + taskType + "-spacer"));
+            spacers.forEach(function (spacer) {
+                $(spacer).toggle();
+            });
+
+            var form = document.getElementById("new-" + taskType);
+            $(form).toggle();
+
+            if (icon.innerHTML == "add") {
+                getTasks(taskType);
+            }
+
         });
+    }());
 
-        // Toggle icon
-        console.log(taskType);
-        var icon = document.getElementById(taskType + "-i");
-        console.log(icon);
-        icon.innerHTML = icon.innerHTML == "add" ? "check" : "add";
-
-        // Toggle form
-        var spacers = Array.from(document.getElementsByClassName("new-" + taskType + "-spacer"));
-        spacers.forEach(function (spacer) {
-            $(spacer).toggle();
-        });
-
-        var form = document.getElementById("new-" + taskType);
-        $(form).toggle();
-
-        if (icon.innerHTML == "add") {
-            getTasks(taskType);
-        }
-
-    });
 }
 
 
@@ -272,7 +270,9 @@ function createCard(task, type) {
     deleteButton.classList.add("mdl-js-ripple-effect");
 
     var deleteIcon = document.createElement('i');
-    deleteIcon.onclick = function() { deleteCard(task['id'], type) };
+    deleteIcon.onclick = function () {
+        deleteCard(task['id'], type)
+    };
     deleteIcon.classList.add("material-icons");
     deleteIcon.innerHTML = "delete";
 
