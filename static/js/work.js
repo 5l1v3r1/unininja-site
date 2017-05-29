@@ -4,7 +4,6 @@ var count = 0;
 // https://stackoverflow.com/a/13328513/7435520
 document.addEventListener('DOMContentLoaded', function () {
   if (!Notification) {
-    alert('Desktop notifications not available in your browser. Try Chromium.');
     return;
   }
 
