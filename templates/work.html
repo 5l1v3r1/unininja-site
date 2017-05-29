@@ -57,17 +57,27 @@
 {% block body %}
     <script>
         var seconds = {{ time }};
-        y = seconds;
-        // var y = x * 5;
-        minute = y % 60;
-        hour = minute % 60;
+        // y = seconds;
+        // // var y = x * 5;
+        // minute = y % 60;
+        // hour = minute % 60;
+        //
+        // // minute = checkTime(minute);
+        //
+        // document.getElementById("countDown").innerHTML = hour + ":" + minute + "minutes="+minute + " hours=" + hour;
+        //
+        // document.getElementById("countDownSec").innerHTML = seconds
 
-        // minute = checkTime(minute);
 
-        document.getElementById("countDown").innerHTML = hour + ":" + minute + "minutes="+minute + " hours=" + hour;
-
-        document.getElementById("countDownSec").innerHTML = seconds
-
+        window.onload = function(){     
+          var hours = seconds % 3600;
+          var minutes = (seconds - (hours * 3600)) % 60;
+          setInterval(function(){
+            var a = new Date();         document.getElementById(“timer”).innerHTML = hou +” : ” + minutes ;
+            sec--;
+          },500);
+        }
+        function resetTimer() {}
 
 
     </script>
