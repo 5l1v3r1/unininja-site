@@ -60,23 +60,15 @@
         y = seconds;
         // var y = x * 5;
         minute = y % 60;
-        hour = (y - minute) / 60;
+        hour = minute % 60;
 
         // minute = checkTime(minute);
 
-        // document.getElementById("countDown").innerHTML = hour + ":" + minute + "minutes="+minute + " hours=" + hour;
-        //
-        //
-        // document.getElementById("countDownSec").innerHTML = seconds
+        document.getElementById("countDown").innerHTML = hour + ":" + minute + "minutes="+minute + " hours=" + hour;
 
-        // Time calculations for days, hours, minutes and seconds
-var hours = Math.floor((y % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-var minutes = Math.floor((y % (1000 * 60 * 60)) / (1000 * 60));
-var seconds = Math.floor((y% (1000 * 60)) / 1000);
+        document.getElementById("countDownSec").innerHTML = seconds
 
-// Display the result in the element with id="demo"
-document.getElementById("countDown").innerHTML = hours + "h "
-+ minutes + "m " + seconds + "s ";
+
 
     </script>
     <script src="{{ url_for('static', filename='js/work.js') }}"></script>
