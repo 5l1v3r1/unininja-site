@@ -20,7 +20,9 @@
               <div class="mdl-cell mdl-cell--12-col">
                 <h2 id="countDown"></h2>
               </div>
-
+              <div class="mdl-cell mdl-cell--12-col">
+                <h2 id="countDownSec"></h2>
+              </div>
 
                 <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col" id="card">
                     <span></span>
@@ -62,9 +64,10 @@
 
         // minute = checkTime(minute);
 
-        document.getElementById("countDown").innerHTML = hour":"minute;
+        document.getElementById("countDown").innerHTML = hour +":" + minute;
 
-      
+
+        document.getElementById("countDownSec").innerHTML = seconds
 
     </script>
     <script src="{{ url_for('static', filename='js/work.js') }}"></script>
