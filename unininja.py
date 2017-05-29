@@ -176,9 +176,14 @@ def work():
         tasks = Task.query.filter_by(user_id=current_user.id).all()
         tasks = filter_tasks(tasks)
         tasks = calculate_work(tasks)
+
         if len(tasks) < 1:
             return redirect('/?tab=assignments')
-        return render_template('work.html', task=tasks[0], time=time)
+
+        next_task = int(request.args.get('next', default=0))
+        if next_task >= len(tasks):
+            next_task = 0
+        return render_template('work.html', task=tasks[next_task], time=time, next=next_task)
 
     else:
         return redirect('/')
