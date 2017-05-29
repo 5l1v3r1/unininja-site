@@ -23,9 +23,12 @@
         <a href="#fixed-tab-1" class="mdl-layout__tab {% if tab == 'home' %}is-active{% endif %}">Home</a>
         <a href="#fixed-tab-2" class="mdl-layout__tab {% if tab == 'work' %}is-active{% endif %}">Work</a>
         <a href="#fixed-tab-3"
-           class="mdl-layout__tab {% if tab == 'assignments' %}is-active{% endif %}"><span class="mdl-badge hidden-badge" data-badge="0" id="assignment-badge">Assignments</span></a>
-        <a href="#fixed-tab-4" class="mdl-layout__tab {% if tab == 'exams' %}is-active{% endif %}"><span class="mdl-badge hidden-badge" data-badge="0" id="exam-badge">Exams</span></a>
-        <a href="#fixed-tab-5" class="mdl-layout__tab {% if tab == 'tasks' %}is-active{% endif %}"><span class="mdl-badge hidden-badge" data-badge="0" id="task-badge">Tasks</span></a>
+           class="mdl-layout__tab {% if tab == 'assignments' %}is-active{% endif %}"><span
+                class="mdl-badge hidden-badge" data-badge="0" id="assignment-badge">Assignments</span></a>
+        <a href="#fixed-tab-4" class="mdl-layout__tab {% if tab == 'exams' %}is-active{% endif %}"><span
+                class="mdl-badge hidden-badge" data-badge="0" id="exam-badge">Exams</span></a>
+        <a href="#fixed-tab-5" class="mdl-layout__tab {% if tab == 'tasks' %}is-active{% endif %}"><span
+                class="mdl-badge hidden-badge" data-badge="0" id="task-badge">Tasks</span></a>
         <a href="#fixed-tab-6" class="mdl-layout__tab {% if tab == 'plan' %}is-active{% endif %}">Plan</a>
     </div>
 {% endblock %}
@@ -309,9 +312,35 @@
     <section class="mdl-layout__tab-panel {% if tab == 'plan' %}is-active{% endif %}" id="fixed-tab-6">
         <div class="page-content">
             <div class="mdl-grid" id="plan">
-                Plan
+                <div class="mdl-cell mdl-cell--12-col">
+                    <h2>
+                        Plan
+                    </h2>
+                </div>
             </div>
         </div>
+        {% if tasks %}
+            <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+                <thead>
+                <tr>
+                    <th class="mdl-data-table__cell--non-numeric">Subject</th>
+                    <th class="mdl-data-table__cell--non-numeric">Name</th>
+                    <th class="mdl-data-table__cell--non-numeric">Worth</th>
+                    <th class="mdl-data-table__cell--non-numeric">Complete</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for task in tasks %}
+                    <tr style="background-color: {{ task.color }}">
+                        <td class="mdl-data-table__cell--non-numeric">{{ task.name }}</td>
+                        <td class="mdl-data-table__cell--non-numeric">{{ task.subject }}</td>
+                        <td class="mdl-data-table__cell--non-numeric">{{ task.percent_worth }}%</td>
+                        <td class="mdl-data-table__cell--non-numeric">{{ task.percent_complete }}%</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
     </section>
 {% endblock %}
 

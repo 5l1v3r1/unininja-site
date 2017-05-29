@@ -27,9 +27,10 @@ table, th, td {
     border: 1px solid black;
 }
 
-@media (min-width: 720px) {
+@media (min-width: 1000px) {
     .mdl-grid {
         width: 75%;
+        margin: auto;
     }
 }
 
