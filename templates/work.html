@@ -57,14 +57,14 @@
 {% block body %}
     <script>
         var seconds = {{ time }};
-        x = seconds;
-        var y = x * 5;
+        y = seconds;
+        // var y = x * 5;
         minute = y % 60;
         hour = (y - minute) / 60;
 
         // minute = checkTime(minute);
 
-        document.getElementById("countDown").innerHTML = hour +":" + minute;
+        document.getElementById("countDown").innerHTML = hour + ":" + minute;
 
 
         document.getElementById("countDownSec").innerHTML = seconds
