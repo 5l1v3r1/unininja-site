@@ -119,7 +119,9 @@ for (var i = 0; i < taskTypes.length; i++) {
         });
 
         // Toggle icon
+        console.log(taskType);
         var icon = document.getElementById(taskType + "-i");
+        console.log(icon);
         icon.innerHTML = icon.innerHTML == "add" ? "check" : "add";
 
         // Toggle form
