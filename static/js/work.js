@@ -1,6 +1,8 @@
 var card = document.getElementById('card');
 var count = 0;
 
+console.log("let's work");
+
 function formatTime(time) {
     var hours = Math.floor(time / 3600);
     if (hours < 10) {
