@@ -161,6 +161,9 @@ function createCard(task, type) {
     cardDiv.classList.add("mdl-card");
     cardDiv.classList.add("mdl-shadow--2dp");
     cardDiv.classList.add(type + "-card");
+    cardDiv.classList.add("mdl-cell");
+    cardDiv.classList.add("mdl-cell--4-col");
+
 
     var titleDiv = document.createElement('div');
     titleDiv.classList.add("mdl-card__title");

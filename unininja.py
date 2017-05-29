@@ -106,7 +106,12 @@ def before_request():
 def index():
     if current_user.is_authenticated:
         tab = request.args.get('tab') or 'home'
-        return render_template('index.html', tab=tab)
+
+        tasks = Task.query.filter_by(user_id=current_user.id).all()
+        tasks = filter_tasks(tasks)
+        tasks = calculate_work(tasks)
+
+        return render_template('index.html', tab=tab, tasks=tasks)
     else:
         return render_template('unregistered.html')
 
