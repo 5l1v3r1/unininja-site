@@ -7,9 +7,9 @@
 
     {% if error %}
         <style>
-        mdl-card__title {
-            background-color: red;
-        }
+            mdl-card__title {
+                background-color: red;
+            }
         </style>
     {% endif %}
 {% endblock %}
@@ -23,9 +23,10 @@
 
                         <div class="mdl-card__title mdl-card--expand">
                             <h4>
-                                Sign in to uni.ninja
                                 {% if error %}
                                     There was an error signing in
+                                {% else %}
+                                    Sign in to uni.ninja
                                 {% endif %}
                             </h4>
                         </div>

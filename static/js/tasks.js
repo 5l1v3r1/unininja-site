@@ -146,7 +146,7 @@ function getTasks(type) {
         console.log("setting styles");
         taskBadge.setAttribute("data-badge", tasks.length);
         taskBadge.classList.remove('hidden-badge');
-        
+
         for (i = 0; i < tasks.length; i++) {
             createCard(tasks[i], type);
         }

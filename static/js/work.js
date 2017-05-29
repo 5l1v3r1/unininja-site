@@ -13,7 +13,11 @@ var updateInterval = setInterval(function () {
         update();
         count +=1
     } else {
-        alert('done');
+        navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
+
+        if ("vibrate" in navigator){
+            navigator.vibrate([500, 200, 100]);
+        }
         clearInterval(updateInterval);
     }
 }, 1000);
