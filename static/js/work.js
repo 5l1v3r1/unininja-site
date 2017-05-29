@@ -32,7 +32,7 @@ function end() {
 
 function counter() {
     if (count <= timeRemaining) {
-        if (count == 3600) {
+        if (count == workTime) {
             buttons = document.getElementById("buttons");
             buttons.style.visibility = "visible";
             update();

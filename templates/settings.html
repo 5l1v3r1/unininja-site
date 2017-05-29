@@ -7,16 +7,8 @@
 {% block header %}
     <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
         <a href="{{ url_for('index') }}" class="mdl-layout__tab">Home</a>
-        <a href="{{ url_for('signup') }}" class="mdl-layout__tab is-active">Sign In</a>
+        <a href="{{ url_for('settings') }}" class="mdl-layout__tab is-active">Settings</a>
     </div>
-
-    {% if error %}
-        <style>
-            mdl-card__title {
-                background-color: red;
-            }
-        </style>
-    {% endif %}
 {% endblock %}
 {% block content %}
     <section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
@@ -24,32 +16,23 @@
             <div class="mdl-grid" id="home">
                 <div class="mdl-cell mdl-cell--2-col"></div>
                 <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--8-col">
-                    <form method="POST" id="signInForm" action="login">
+                    <form method="POST" id="settingsForm" action="settings">
 
                         <div class="mdl-card__title mdl-card--expand">
                             <h4>
-                                {% if error %}
-                                    There was an error signing in
-                                {% else %}
-                                    Sign in to Uni Ninja
-                                {% endif %}
+                                Settings
                             </h4>
                         </div>
                         <div class="mdl-card__supporting-text">
                             {{ form.csrf_token }}
                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <input class="mdl-textfield__input" name="email" type="email" id="userEmail">
-                                <label class="mdl-textfield__label" for="userEmail">{{ form.email.label }}</label>
-                            </div>
-                            <br>
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <input class="mdl-textfield__input" name="password" type="password" id="userPassword">
-                                <label class="mdl-textfield__label" for="userPassword">{{ form.password.label }}</label>
+                                <input class="mdl-textfield__input" name="work_time" type="text" id="worktime" value="{{ current }}">
+                                <label class="mdl-textfield__label" for="worktime">{{ form.work_time.label }}</label>
                             </div>
                             <br>
                         </div>
                         <div class="mdl-card__actions mdl-card--border">
-                            <a href="#" onclick="document.getElementById('signInForm').submit();"
+                            <a href="#" onclick="document.getElementById('settingsForm').submit();"
                                class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
                                 Ok
                             </a>

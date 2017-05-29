@@ -12,6 +12,7 @@ from wtforms import StringField, HiddenField, SubmitField, PasswordField
 from wtforms.validators import DataRequired
 
 from passlib.hash import sha256_crypt
+
 SALT = "4ec82967c2f3317b"
 
 app = Flask(__name__)
@@ -20,7 +21,6 @@ db = SQLAlchemy(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
-
 
 
 @login_manager.user_loader
@@ -44,6 +44,10 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
 
 
+class SettingsForm(FlaskForm):
+    work_time = StringField('Minutes per study session', validators=[DataRequired()])
+
+
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
@@ -52,6 +56,7 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(255), unique=True)
     active = db.Column(db.Boolean())
     confirmed_at = db.Column(db.DateTime())
+    work_time = db.Column(db.Integer)
 
     tasks = db.relationship("Task", backref='users')
 
@@ -75,7 +80,8 @@ class Task(db.Model):
 def create_user(name, email, password):
     password = sha256_crypt.hash(password, salt=SALT)
     if not User.query.filter_by(email=email).first():
-        user = User(name=name, email=email, password=password, active=True, confirmed_at=datetime.utcnow())
+        user = User(name=name, email=email, password=password, active=True, confirmed_at=datetime.utcnow(),
+                    work_time=3600)
         db.session.add(user)
         db.session.commit()
         return True
@@ -154,6 +160,22 @@ def login():
     return render_template('login.html', form=form, error=False)
 
 
+@app.route('/settings', methods=['GET', 'POST'])
+def settings():
+    form = SettingsForm()
+    if current_user.is_authenticated:
+        if form.validate_on_submit():
+            user = User.query.filter_by(id=current_user.id).first()
+            user.work_time = int(form.work_time.data) * 60
+            db.session.commit()
+            return redirect('/')
+        work_time = User.query.filter_by(id=current_user.id).first().work_time
+        work_time = int(work_time / 60)
+        return render_template('settings.html', form=form, current=work_time)
+    else:
+        return redirect('/login')
+
+
 def filter_tasks(raw_tasks):
     tasks = []
     for raw_task in raw_tasks:
@@ -183,7 +205,9 @@ def work():
         next_task = int(request.args.get('next', default=0))
         if next_task >= len(tasks):
             next_task = 0
-        return render_template('work.html', task=tasks[next_task], time=time, next=next_task)
+
+        work_time = User.query.filter_by(id=current_user.id).first().work_time
+        return render_template('work.html', task=tasks[next_task], time=time, next=next_task, work_time=work_time)
 
     else:
         return redirect('/')
