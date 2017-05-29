@@ -4,12 +4,15 @@ from datetime import datetime
 from urllib.parse import urlparse, urljoin
 
 from flask import *
-from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy  # Prevents SQL injection by default
 from flask_login import LoginManager, current_user, login_user, logout_user, UserMixin
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, HiddenField, SubmitField, PasswordField
 from wtforms.validators import DataRequired
+
+from passlib.hash import sha256_crypt
+SALT = "4ec82967c2f3317b"
 
 app = Flask(__name__)
 app.config.from_object('config.Config')
@@ -17,6 +20,7 @@ db = SQLAlchemy(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
+
 
 
 @login_manager.user_loader
@@ -69,6 +73,7 @@ class Task(db.Model):
 
 
 def create_user(name, email, password):
+    password = sha256_crypt.hash(password, salt=SALT)
     if not User.query.filter_by(email=email).first():
         user = User(name=name, email=email, password=password, active=True, confirmed_at=datetime.utcnow())
         db.session.add(user)
@@ -79,9 +84,12 @@ def create_user(name, email, password):
 
 
 def check_user(email, password):
-    user = User.query.filter_by(email=email, password=password).first()
+    user = User.query.filter_by(email=email).first()
     if user:
-        return user
+        if sha256_crypt.verify(password, user.password):
+            return user
+        else:
+            return None
     else:
         return None
 

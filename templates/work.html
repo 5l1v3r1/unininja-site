@@ -46,7 +46,10 @@
 {% endblock %}
 {% block body %}
     <script>
-    var seconds = {{ time }};
+        var seconds = {{ time }};
     </script>
     <script src="{{ url_for('static', filename='js/work.js') }}"></script>
+
+    <audio src="{{ url_for('static', filename='sound/bell.wav') }}" autostart="false" width="0" height="0" id="sound"
+           enablejavascript="true">
 {% endblock %}

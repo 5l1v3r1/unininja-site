@@ -222,8 +222,12 @@ function createCard(task, type) {
     var dueDateDiv = document.createElement('div');
     dueDateDiv.classList.add("mdl-card__actions");
     dueDateDiv.classList.add("mdl-card--border");
+
     var t = new Date(task['due_time'] * 1000);
-    var formatted = t.toString().slice(0, 24);
+    var offset = new Date().getTimezoneOffset() * 60000;
+    t = new Date(t.getTime() - offset);
+    var formatted = t.toString().slice(0, 21);
+
     dueDateDiv.innerHTML = "Due Date: " + formatted;
 
     cardDiv.appendChild(dueDateDiv);
@@ -235,16 +239,11 @@ function createCard(task, type) {
     var spacerDiv = document.createElement('div');
     spacerDiv.classList.add('mdl-layout-spacer');
 
-    var editButton = document.createElement('i');
-    editButton.classList.add("material-icons");
-    editButton.innerHTML = "edit";
-
     var deleteButton = document.createElement('i');
     deleteButton.classList.add("material-icons");
     deleteButton.innerHTML = "delete";
 
     buttonDiv.appendChild(spacerDiv);
-    buttonDiv.appendChild(editButton);
     buttonDiv.appendChild(deleteButton);
     cardDiv.appendChild(buttonDiv);
 
