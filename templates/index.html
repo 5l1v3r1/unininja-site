@@ -332,8 +332,8 @@
                 <tbody>
                 {% for task in tasks %}
                     <tr style="background-color: {{ task.color }}">
-                        <td class="mdl-data-table__cell--non-numeric">{{ task.name }}</td>
                         <td class="mdl-data-table__cell--non-numeric">{{ task.subject }}</td>
+                        <td class="mdl-data-table__cell--non-numeric">{{ task.name }}</td>
                         <td class="mdl-data-table__cell--non-numeric">{{ task.percent_worth }}%</td>
                         <td class="mdl-data-table__cell--non-numeric">{{ task.percent_complete }}%</td>
                     </tr>
