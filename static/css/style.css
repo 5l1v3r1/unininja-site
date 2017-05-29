@@ -142,3 +142,7 @@ p {
 .hidden-badge::after {
     visibility: hidden;
 }
+
+.material-icons {
+    cursor: pointer;
+}

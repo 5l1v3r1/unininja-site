@@ -13,13 +13,34 @@ function work() {
 
 taskTypes.forEach(function (type) {
     updateDueTime(type);
-})
+});
+
+function deleteCard(id, type) {
+    var headerLogo = document.getElementById("header-logo");
+    headerLogo.style.animation = "spin 1s infinite linear";
+
+    var getData = {
+        "id": id
+    };
+
+    $.getJSON('delete', getData, function (data) {
+        if (data['status'] == 'failure') {
+            return;
+        }
+        headerLogo.style.animation = "";
+        getTasks(type);
+    });
+}
 
 function updateDueTime(type) {
     var indate = document.getElementById('new-' + type + '-date').value.split("/");
     var intime = document.getElementById('new-' + type + '-time').value.split(":");
 
     var realDate = new Date(indate[2], indate[1] - 1, indate[0], intime[0], intime[1]);
+    console.log(realDate);
+    var offset = new Date().getTimezoneOffset() * 60000;
+    realDate = new Date(realDate.getTime() + offset);
+    console.log(realDate);
 
     var realDateInput = document.getElementById("new-" + type + "-due_time").value = realDate.getTime() / 1000 | 0;
 }
@@ -242,12 +263,20 @@ function createCard(task, type) {
     var spacerDiv = document.createElement('div');
     spacerDiv.classList.add('mdl-layout-spacer');
 
-    var deleteButton = document.createElement('i');
-    deleteButton.classList.add("material-icons");
-    deleteButton.innerHTML = "delete";
+    var deleteButton = document.createElement('button');
+    deleteButton.classList.add("mdl-button");
+    deleteButton.classList.add("mdl-js-button");
+    deleteButton.classList.add("mdl-button--icon");
+    deleteButton.classList.add("mdl-js-ripple-effect");
+
+    var deleteIcon = document.createElement('i');
+    deleteIcon.onclick = function() { deleteCard(task['id'], type) };
+    deleteIcon.classList.add("material-icons");
+    deleteIcon.innerHTML = "delete";
 
     buttonDiv.appendChild(spacerDiv);
     buttonDiv.appendChild(deleteButton);
+    deleteButton.appendChild(deleteIcon);
     cardDiv.appendChild(buttonDiv);
 
     typeDiv.appendChild(cardDiv);

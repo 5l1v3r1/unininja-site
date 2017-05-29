@@ -244,6 +244,20 @@ def update_task():
         return jsonify({'status': 'failure'})
 
 
+@app.route('/delete')
+def delete():
+    if current_user.is_authenticated:
+        task_id = request.args.get('id')
+        if task_id:
+            task = Task.query.filter_by(user_id=current_user.id, id=task_id).first()
+            db.session.delete(task)
+            return jsonify({'status': 'success'})
+        else:
+            return jsonify({'status': 'failure'})
+    else:
+        return redirect('/login')
+
+
 @app.route('/logout')
 def logout():
     logout_user()
