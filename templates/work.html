@@ -13,7 +13,15 @@
         <div class="page-content">
             <div class="mdl-grid">
 
-                <div class="mdl-cell mdl-cell--4-col"></div>
+                <!-- <div class="mdl-card mdl-shadow--2dp mdl-cell--12-col">
+                  <span id=countDown> </span>
+
+              </div> -->
+              <div class="mdl-cell mdl-cell--12-col">
+                <h2 id="countDown"></h2>
+              </div>
+
+                
                 <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col" id="card">
                     <span></span>
 
@@ -47,6 +55,7 @@
 {% block body %}
     <script>
         var seconds = {{ time }};
+        document.getElementById("countDown").innerHTML = seconds
     </script>
     <script src="{{ url_for('static', filename='js/work.js') }}"></script>
 
