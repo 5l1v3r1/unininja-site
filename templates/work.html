@@ -30,10 +30,12 @@
                             {{ task.details }}
                         </div>
                         <div class="mdl-card__actions mdl-card--border" style="visibility: hidden" id="buttons">
-                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="continueButton()">
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                                    onclick="continueButton()">
                                 Continue
                             </button>
-                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="nextButton()">
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                                    onclick="nextButton()">
                                 Next
                             </button>
                         </div>
@@ -56,6 +58,7 @@
     </script>
     <script src="{{ url_for('static', filename='js/work.js') }}"></script>
 
-    <audio src="{{ url_for('static', filename='sound/notification.wav') }}" autostart="false" width="0" height="0" id="sound"
+    <audio src="{{ url_for('static', filename='sound/notification.wav') }}" autostart="false" width="0" height="0"
+           id="sound"
            enablejavascript="true">
 {% endblock %}
