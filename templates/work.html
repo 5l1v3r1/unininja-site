@@ -59,8 +59,8 @@
         var seconds = {{ time }};
         y = seconds;
         // var y = x * 5;
-        hours = y % 3600;
-        minutes = (seconds - (hours * 3600)) % 60;
+        hour = y % 3600;
+        minute = (seconds - (hour * 3600)) % 60;
 
         // minute = checkTime(minute);
 
