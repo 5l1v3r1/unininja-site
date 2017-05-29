@@ -1,7 +1,33 @@
 var card = document.getElementById('card');
 var count = 0;
 
-console.log("let's work");
+// https://stackoverflow.com/a/13328513/7435520
+document.addEventListener('DOMContentLoaded', function () {
+  if (!Notification) {
+    alert('Desktop notifications not available in your browser. Try Chromium.');
+    return;
+  }
+
+  if (Notification.permission !== "granted")
+    Notification.requestPermission();
+});
+
+function notifyOver() {
+  if (Notification.permission !== "granted")
+    Notification.requestPermission();
+  else {
+    var notification = new Notification("Time's Up!", {
+      icon: 'static/favicon.png',
+      body: "Time to take a break from studying"
+    });
+
+    // notification.onclick = function () {
+    //   window.open("http://stackoverflow.com/a/13328397/1269037");
+    // };
+
+  }
+
+}
 
 function formatTime(time) {
     var hours = Math.floor(time / 3600);
@@ -21,6 +47,7 @@ function formatTime(time) {
 }
 
 function end() {
+    notifyOver();
     navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
 
     if ("vibrate" in navigator) {
@@ -38,7 +65,7 @@ function counter() {
             buttons = document.getElementById("buttons");
             buttons.style.visibility = "visible";
             update();
-            end()
+            end();
             return;
         }
         update();
