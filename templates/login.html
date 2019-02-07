@@ -38,12 +38,14 @@
                         <div class="mdl-card__supporting-text">
                             {{ form.csrf_token }}
                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <input class="mdl-textfield__input" name="email" type="email" id="userEmail">
+                                <input class="mdl-textfield__input" name="email" type="email" id="userEmail"
+                                       value="test@user.com">
                                 <label class="mdl-textfield__label" for="userEmail">{{ form.email.label }}</label>
                             </div>
                             <br>
                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <input class="mdl-textfield__input" name="password" type="password" id="userPassword">
+                                <input class="mdl-textfield__input" name="password" type="password" id="userPassword"
+                                       value="test">
                                 <label class="mdl-textfield__label" for="userPassword">{{ form.password.label }}</label>
                             </div>
                             <br>
